@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 
-// Internal SVG Icon to replace lucide-react dependency
+// Internal SVG Icon
 const CameraIcon = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
 );
@@ -23,7 +25,7 @@ const Polaroid = ({ image, caption, date, rotation }) => {
           </div>
         </div>
         
-        <div className="mt-3 md:mt-4 font-permanent-marker text-[#b2693f] text-center">
+        <div className="mt-3 md:mt-4 font-playfair text-[#b2693f] text-center">
           <p className="text-lg md:text-xl leading-tight mb-1">
             {caption}
           </p>
@@ -64,7 +66,7 @@ const InfiniteCarousel = ({ items, speed = 40 }) => {
   );
 };
 
-// --- Native ScrollReveal Component ---
+// --- ScrollReveal ---
 const Word = ({ children, progress, start, colorStart, colorEnd }) => {
   const isActive = progress > start;
   return (
@@ -93,10 +95,8 @@ const ScrollReveal = ({
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      
       const totalScroll = containerRef.current.offsetHeight - windowHeight;
       let currentProgress = -rect.top / totalScroll;
-      
       currentProgress = Math.max(0, Math.min(1, currentProgress));
       setProgress(currentProgress);
     };
@@ -148,7 +148,7 @@ const ScrollReveal = ({
   );
 };
 
-// --- Countdown Section Component ---
+// --- Countdown Section ---
 const CountdownSection = ({ 
   targetDate = "August 1, 2026 19:00:00",
   invitationText = "Por favor, acompáñanos a celebrar este momento inolvidable.",
@@ -162,7 +162,7 @@ const CountdownSection = ({
 
   const targetTime = new Date(targetDate).getTime();
 
-  // --- Confetti Logic ---
+  // Confetti
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -186,7 +186,6 @@ const CountdownSection = ({
         this.gravity = 0.06; 
         this.rotation = Math.random() * 360;
         this.rotationSpeed = Math.random() * 4 - 2; 
-        
         const cinematicColors = [
           'rgba(183, 110, 121, 0.8)',
           'rgba(245, 230, 211, 0.8)',
@@ -221,8 +220,8 @@ const CountdownSection = ({
       const progress = scrollProgressRef.current;
       
       let emissionChance = 0.35;
-      if (progress > 0.85) {
-        emissionChance = 0.35 * (1 - ((progress - 0.85) / 0.15));
+      if (progress > 0.9) {
+        emissionChance = 0.35 * (1 - ((progress - 0.9) / 0.1));
       }
 
       if (progress > 0.01 && progress < 0.99) {
@@ -253,16 +252,14 @@ const CountdownSection = ({
     };
   }, []);
 
-  // --- Scroll Logic ---
+  // Scroll
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const totalHeight = sectionRef.current.offsetHeight - window.innerHeight;
-      
       let progress = -rect.top / totalHeight;
       progress = Math.max(0, Math.min(progress, 1));
-      
       setScrollProgress(progress);
       scrollProgressRef.current = progress;
     };
@@ -272,7 +269,7 @@ const CountdownSection = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // --- Timer Logic ---
+  // Timer
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -296,15 +293,15 @@ const CountdownSection = ({
   let currentAlpha = 0;
   if (scrollProgress < 0.2) {
     currentAlpha = 0.05 + (scrollProgress / 0.2) * 0.95; 
-  } else if (scrollProgress < 0.85) {
+  } else if (scrollProgress < 0.9) {
     currentAlpha = 1;
   } else {
-    currentAlpha = Math.max(0.05, 1 - ((scrollProgress - 0.85) / 0.15) * 0.95);
+    currentAlpha = Math.max(0.05, 1 - ((scrollProgress - 0.9) / 0.1) * 0.95);
   }
   const textColor = `rgba(178, 105, 63, ${currentAlpha})`;
 
   return (
-    <section id="countdown" ref={sectionRef} className="relative w-full h-[350vh] bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20">
+    <section id="countdown" ref={sectionRef} className="relative w-full h-[450vh] bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20">
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
         
         <canvas ref={canvasRef} className="absolute inset-0 z-50" />
@@ -346,14 +343,21 @@ const CountdownSection = ({
 };
 
 
-export default function App() {
+export default function SofiaXV() {
   const scrollContainerRef = useRef(null);
   const heroTextRef = useRef(null);
   const heroCardRef = useRef(null);
   const heroImgRef = useRef(null);
+  const navbarRef = useRef(null);
   
   const galleryContainerRef = useRef(null);
   const polaroidRefs = useRef([]);
+
+  const [rsvpData, setRsvpData] = useState({
+    name: '',
+    guestCount: '',
+    additionalNames: ''
+  });
 
   const photos = [
     { id: 1, url: 'https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', caption: 'Infancia', rotation: -4 },
@@ -385,20 +389,30 @@ export default function App() {
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const isDesktop = window.innerWidth >= 768;
 
-      const targetScale = isDesktop ? 0.45 : 0.80;
+      const targetScale = isDesktop ? 0.60 : 0.80;
       const cardScale = 1.0 - ((1.0 - targetScale) * easeOut); 
       const borderRadius = isDesktop ? (24 + (32 * easeOut)) : (16 + (16 * easeOut));
+      const imgTranslateY = isDesktop ? -15 * easeOut : -5 * easeOut;
       
       const imgScale = 1 + (0.15 * easeOut); 
 
-      const textScale = 1 - (0.15 * easeOut);
-      const textTranslateY = 0;
+      const textScale = 0.45 + (0.45 * easeOut);
+      const textTranslateY = isDesktop ? 8 * easeOut : 10 * easeOut;
 
-      heroTextRef.current.style.transform = `translateY(${textTranslateY}vh) scale(${textScale})`;
-      heroCardRef.current.style.transform = `scale(${cardScale})`;
+      heroCardRef.current.style.transform = `translateY(${imgTranslateY}vh) scale(${cardScale})`;
       heroCardRef.current.style.borderRadius = `${borderRadius}px`;
       heroImgRef.current.style.transform = `scale(${imgScale})`;
+      heroTextRef.current.style.transform = `translateY(${textTranslateY}vh) scale(${textScale})`;
 
+      // Navbar visibility
+      if (navbarRef.current) {
+        const showNav = window.scrollY > window.innerHeight * 2.5;
+        navbarRef.current.style.opacity = showNav ? '1' : '0';
+        navbarRef.current.style.pointerEvents = showNav ? 'auto' : 'none';
+        navbarRef.current.style.transform = `translate(-50%, ${showNav ? '0' : '-20px'})`;
+      }
+
+      // Gallery scroll stack
       if (galleryContainerRef.current) {
         const galContainer = galleryContainerRef.current;
         const galRect = galContainer.getBoundingClientRect();
@@ -408,14 +422,16 @@ export default function App() {
         let galProgress = -galRect.top / totalHeight;
         galProgress = Math.min(Math.max(galProgress, 0), 1);
 
+        const animationProgress = Math.min(galProgress / 0.8, 1);
+
         polaroidRefs.current.forEach((ref, index) => {
           if (!ref) return;
 
           const startThreshold = index / photos.length;
           let cardProgress = 0;
           
-          if (galProgress > startThreshold) {
-            cardProgress = (galProgress - startThreshold) / (1 / photos.length);
+          if (animationProgress > startThreshold) {
+            cardProgress = (animationProgress - startThreshold) / (1 / photos.length);
           }
           cardProgress = Math.min(Math.max(cardProgress, 0), 1);
 
@@ -447,228 +463,226 @@ export default function App() {
     };
   }, []);
 
+  const handleWhatsAppSubmit = (e) => {
+    e.preventDefault();
+
+    const { name, guestCount, additionalNames } = rsvpData;
+    const phoneNumber = "17078494798"; 
+
+    const message = `¡Hola! Me gustaría confirmar mi asistencia a los XV de Sofía.\n\n*Nombre:* ${name}\n*Total de invitados:* ${guestCount}\n*Acompañantes:* ${additionalNames}`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
-    <>
-      <style>
-        {`
-          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Permanent+Marker&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+    <div>
+      {/* Floating Navbar */}
+      <nav 
+        ref={navbarRef}
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 md:gap-10 px-6 py-1.5 bg-[#FDFBF7]/80 backdrop-blur-md border border-[#B76E79]/30 rounded-full shadow-lg overflow-x-auto max-w-[90vw] whitespace-nowrap hide-scrollbar transition-all duration-500 opacity-0 pointer-events-none"
+        style={{ transform: 'translate(-50%, -20px)' }}
+      >
+        <a href="#home" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Inicio</a>
+        <a href="#details" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Detalles</a>
+        <a href="#gallery" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Galería</a>
+        <a href="#mensaje" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Mensaje</a>
+        <a href="#countdown" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Conteo</a>
+        <a href="#timeline" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Historia</a>
+        <a href="#rsvp" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">RSVP</a>
+      </nav>
 
-          html {
-            scroll-behavior: smooth;
-          }
+      {/* Hero Section */}
+      <div id="home" ref={scrollContainerRef} className="relative w-full h-[250vh]">
+        <div className="sticky top-0 w-full h-screen flex overflow-hidden bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD]">
           
-          body {
-            font-family: 'Inter', sans-serif;
-            background-color: #F5E6D3;
-            color: #b2693f;
-          }
-
-          h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-          }
-
-          .font-playfair {
-            font-family: 'Playfair Display', serif !important;
-          }
-
-          .font-cursive-elegant {
-            font-family: 'Pinyon Script', cursive !important;
-          }
-          
-          .font-permanent-marker {
-            font-family: 'Permanent Marker', cursive !important;
-          }
-
-          ::-webkit-scrollbar {
-            width: 8px;
-          }
-          ::-webkit-scrollbar-track {
-            background: #FDFBF7;
-          }
-          ::-webkit-scrollbar-thumb {
-            background: #B76E79;
-            border-radius: 4px;
-          }
-          ::-webkit-scrollbar-thumb:hover {
-            background: #D4AF37;
-          }
-          
-          ::selection {
-            background-color: rgba(183, 110, 121, 0.3);
-          }
-
-          @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-100% / 3)); }
-          }
-          .animate-scroll:hover {
-            animation-play-state: paused;
-          }
-        `}
-      </style>
-
-      <div className="antialiased">
-        {/* Floating Rounded Navbar */}
-        <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 md:gap-10 px-6 py-1.5 bg-[#FDFBF7]/80 backdrop-blur-md border border-[#B76E79]/30 rounded-full shadow-lg overflow-x-auto max-w-[90vw] whitespace-nowrap">
-          <a href="#home" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Inicio</a>
-          <a href="#details" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Detalles</a>
-          <a href="#gallery" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Galería</a>
-          <a href="#mensaje" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Mensaje</a>
-          <a href="#countdown" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Conteo</a>
-          <a href="#timeline" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Historia</a>
-          <a href="#rsvp" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">RSVP</a>
-        </nav>
-
-        {/* Hero Section */}
-        <div id="home" ref={scrollContainerRef} className="relative w-full h-[250vh]">
-          <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD]">
-            <div ref={heroCardRef} className="absolute z-0 w-[94vw] h-[94vh] md:w-[96vw] md:h-[96vh] origin-center overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_10px_40px_rgba(183,110,121,0.3)] will-change-transform border border-[#B76E79]/20">
+          {/* Image Container */}
+          <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+            <div ref={heroCardRef} className="relative w-[94vw] h-[94vh] md:w-[96vw] md:h-[96vh] origin-center overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_10px_40px_rgba(183,110,121,0.3)] will-change-transform border border-[#B76E79]/20 pointer-events-auto">
               <img ref={heroImgRef}
                 src="https://images.unsplash.com/photo-1549490349-8643362247b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
                 alt="Sofia XV Cinematic" 
                 className="absolute inset-0 w-full h-full object-cover will-change-transform"
               />
-              <div className="absolute inset-0 bg-[#FDFBF7]/30 backdrop-blur-[1px]"></div>
+              <div className="absolute inset-0 bg-[#FDFBF7]/30 backdrop-blur-[2px]"></div>
             </div>
+          </div>
 
-            <div ref={heroTextRef} className="relative z-10 flex flex-col items-center text-center px-4 md:px-12 will-change-transform origin-center pointer-events-none">
-              <p className="text-sm md:text-base lg:text-lg tracking-[0.2em] md:tracking-[0.3em] uppercase text-[#b2693f]/90 mb-4 text-balance drop-shadow-sm">
+          {/* Text Container */}
+          <div className="absolute inset-x-0 bottom-16 md:bottom-28 z-20 flex items-end justify-center pointer-events-none">
+            <div ref={heroTextRef} className="flex flex-col items-center text-center px-4 md:px-12 will-change-transform origin-bottom w-full">
+              <p className="text-sm md:text-base lg:text-lg tracking-[0.2em] md:tracking-[0.3em] uppercase text-[#b2693f] mb-2 md:mb-4 text-balance drop-shadow-md">
                 Acompáñanos a celebrar los XV años de
               </p>
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-cursive-elegant font-normal text-[#b2693f] leading-tight drop-shadow-md">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-cursive-elegant font-normal text-[#b2693f] leading-tight drop-shadow-xl">
                 Sofía Becerra Martínez
               </h1>
             </div>
           </div>
+
         </div>
+      </div>
 
-        {/* Details Section */}
-        <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] min-h-screen flex flex-col justify-center py-16 px-6 border-t border-[#B76E79]/20">
-          <div className="max-w-4xl mx-auto text-center w-full">
-            <h2 className="text-3xl md:text-5xl mb-4 md:mb-6 font-light text-[#b2693f]">Una Noche para Recordar</h2>
-            <p className="text-base md:text-lg text-[#b2693f]/80 leading-relaxed mb-8 md:mb-10">
-              Acompáñanos a una velada inolvidable de elegancia, música y celebración mientras Sofía entra en un nuevo capítulo de su vida. Estamos emocionados de compartir este hermoso hito con nuestros familiares y amigos más cercanos.
-            </p>
-            
-            <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-8 md:mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
-              <img 
-                src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
-                alt="Grand Plaza Estate Venue" 
-                className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-              />
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-left">
-              <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
-                <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">La Fecha</h3>
-                <p className="text-sm md:text-base text-[#b2693f]/80">Sábado, 1 de Agosto<br />A partir de las 7:00 PM</p>
-              </div>
-              <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
-                <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">El Lugar</h3>
-                <p className="text-sm md:text-base text-[#b2693f]/80">Grand Plaza Estate<br />123 Crystal Avenue</p>
-              </div>
-              <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
-                <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">Código de Vestimenta</h3>
-                <p className="text-sm md:text-base text-[#b2693f]/80">Formal / Etiqueta Opcional<br />Elegancia Cinematográfica</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Gallery Section */}
-        <section 
-          id="gallery" 
-          ref={galleryContainerRef}
-          className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20" 
-          style={{ height: `${photos.length * 100}vh` }}
-        >
-          <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
-            <h2 className="absolute top-20 md:top-32 text-4xl md:text-5xl font-light text-[#b2693f] z-0">Recuerdos</h2>
-
-            <div className="relative w-[85vw] max-w-[320px] md:max-w-[400px] aspect-[4/5] mt-12 md:mt-20">
-              {photos.map((photo, index) => (
-                <div
-                  key={photo.id}
-                  ref={(el) => (polaroidRefs.current[index] = el)}
-                  className="absolute inset-0 origin-center will-change-transform"
-                  style={{
-                    filter: `drop-shadow(0 20px 40px rgba(183,110,121,0.2))`
-                  }}
-                >
-                  <div className="w-full h-full bg-[#FDFBF7] p-3 pb-12 md:p-5 md:pb-16 shadow-xl border border-[#B76E79]/30 flex flex-col">
-                    <div className="relative flex-1 bg-[#F5E6D3] overflow-hidden">
-                      <img 
-                        src={photo.url} 
-                        alt={photo.caption}
-                        className="w-full h-full object-cover grayscale-[10%] hover:grayscale-0 transition-all duration-700"
-                      />
-                    </div>
-                    
-                    <p className="font-playfair text-[#b2693f] mt-4 md:mt-5 text-xl md:text-2xl text-center tracking-wide">
-                      {photo.caption}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Personal Message Section */}
-        <section id="mensaje" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20">
-          <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
-            <ScrollReveal 
-              text="A lo largo de estos quince años, he aprendido que la magia de la vida reside en los momentos compartidos. Gracias por ser parte de mi historia, por su amor incondicional, y por acompañarme a celebrar esta noche tan especial y verdaderamente inolvidable."
-              scrollHeight="350vh"
-              colorStart="rgba(178, 105, 63, 0.15)"
-              colorEnd="#b2693f"
-              className="font-playfair text-xl md:text-3xl lg:text-4xl leading-relaxed md:leading-[1.6] tracking-tight"
-            >
-              <p className="text-[#b2693f]/70 text-xl md:text-3xl font-playfair italic">
-                - Sofía
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        <CountdownSection />
-
-        {/* Timeline Section */}
-        <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] pt-32 pb-20 border-t border-[#B76E79]/20 overflow-hidden">
-          <div className="max-w-6xl mx-auto text-center px-6 mb-16">
-            <h2 className="text-4xl md:text-5xl font-light text-[#b2693f] mb-6">A Través de los Años</h2>
-            <p className="text-lg md:text-xl text-[#b2693f]/80 max-w-2xl mx-auto leading-relaxed">
-              Un viaje a través de nuestras capturas favoritas. Pasa el cursor sobre una foto para pausar y ver más de cerca.
-            </p>
+      {/* Details Section */}
+      <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] min-h-screen flex flex-col justify-center py-16 px-6 border-t border-[#B76E79]/20">
+        <div className="max-w-4xl mx-auto text-center w-full">
+          <h2 className="text-3xl md:text-5xl mb-4 md:mb-6 font-light text-[#b2693f]">Una Noche para Recordar</h2>
+          <p className="text-base md:text-lg text-[#b2693f]/80 leading-relaxed mb-8 md:mb-10">
+            Acompáñanos a una velada inolvidable de elegancia, música y celebración mientras Sofía entra en un nuevo capítulo de su vida. Estamos emocionados de compartir este hermoso hito con nuestros familiares y amigos más cercanos.
+          </p>
+          
+          <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-8 md:mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
+            <img 
+              src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
+              alt="Grand Plaza Estate Venue" 
+              className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+            />
           </div>
           
-          <InfiniteCarousel items={timelinePhotos} speed={50} />
-        </section>
-
-        {/* RSVP Section */}
-        <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] py-32 px-6 border-t border-[#B76E79]/20">
-          <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl mb-8 font-light text-[#b2693f]">Confirmar Asistencia</h2>
-            <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 1 de julio.</p>
-            <form className="flex flex-col gap-6 text-left">
-              <input type="text" placeholder="Nombre Completo" className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors" />
-              <input type="email" placeholder="Correo Electrónico" className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors" />
-              
-              <div className="flex flex-col gap-2">
-                <label htmlFor="guestCount" className="text-[#b2693f]/80 text-sm ml-2">Número Total de Invitados (incluyéndote a ti)</label>
-                <input type="number" id="guestCount" min="1" placeholder="ej., 2" className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors" />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label htmlFor="guestNames" className="text-[#b2693f]/80 text-sm ml-2">Nombres de Invitados Adicionales</label>
-                <textarea id="guestNames" rows="3" placeholder="Por favor, escribe los nombres de tus acompañantes..." className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors resize-none"></textarea>
-              </div>
-
-              <button type="button" className="w-full bg-[#B76E79] text-white font-semibold rounded-xl px-6 py-4 mt-2 hover:bg-[#D4AF37] hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-300">Confirmar</button>
-            </form>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-left">
+            <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
+              <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">La Fecha</h3>
+              <p className="text-sm md:text-base text-[#b2693f]/80">Sábado, 1 de Agosto<br />A partir de las 7:00 PM</p>
+            </div>
+            <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
+              <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">El Lugar</h3>
+              <p className="text-sm md:text-base text-[#b2693f]/80">Grand Plaza Estate<br />123 Crystal Avenue</p>
+            </div>
+            <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
+              <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">Código de Vestimenta</h3>
+              <p className="text-sm md:text-base text-[#b2693f]/80">Formal / Etiqueta Opcional<br />Elegancia Cinematográfica</p>
+            </div>
           </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section 
+        id="gallery" 
+        ref={galleryContainerRef}
+        className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20" 
+        style={{ height: `${photos.length * 120}vh` }}
+      >
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+          
+          <h2 className="absolute top-20 md:top-32 text-4xl md:text-5xl font-light text-[#b2693f] z-0">Recuerdos</h2>
+
+          <div className="relative w-[85vw] max-w-[320px] md:max-w-[400px] aspect-[4/5] mt-12 md:mt-20">
+            {photos.map((photo, index) => (
+              <div
+                key={photo.id}
+                ref={(el) => (polaroidRefs.current[index] = el)}
+                className="absolute inset-0 origin-center will-change-transform"
+                style={{
+                  filter: `drop-shadow(0 20px 40px rgba(183,110,121,0.2))`
+                }}
+              >
+                <div className="w-full h-full bg-[#FDFBF7] p-3 pb-12 md:p-5 md:pb-16 shadow-xl border border-[#B76E79]/30 flex flex-col">
+                  <div className="relative flex-1 bg-[#F5E6D3] overflow-hidden">
+                    <img 
+                      src={photo.url} 
+                      alt={photo.caption}
+                      className="w-full h-full object-cover grayscale-[10%] hover:grayscale-0 transition-all duration-700"
+                    />
+                  </div>
+                  
+                  <p className="font-playfair text-[#b2693f] mt-4 md:mt-5 text-xl md:text-2xl text-center tracking-wide">
+                    {photo.caption}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+        </div>
+      </section>
+
+      {/* Personal Message Section */}
+      <section id="mensaje" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
+          <ScrollReveal 
+            text="A lo largo de estos quince años, he aprendido que la magia de la vida reside en los momentos compartidos. Gracias por ser parte de mi historia, por su amor incondicional, y por acompañarme a celebrar esta noche tan especial y verdaderamente inolvidable."
+            scrollHeight="450vh" 
+            colorStart="rgba(178, 105, 63, 0.15)"
+            colorEnd="#b2693f"
+            className="font-playfair text-xl md:text-3xl lg:text-4xl leading-relaxed md:leading-[1.6] tracking-tight"
+          >
+            <p className="text-[#b2693f]/70 text-xl md:text-3xl font-playfair italic">
+              - Sofía
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Countdown */}
+      <CountdownSection />
+
+      {/* Timeline Section */}
+      <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] pt-32 pb-20 border-t border-[#B76E79]/20 overflow-hidden">
+        <div className="max-w-6xl mx-auto text-center px-6 mb-16">
+          <h2 className="text-4xl md:text-5xl font-light text-[#b2693f] mb-6">A Través de los Años</h2>
+          <p className="text-lg md:text-xl text-[#b2693f]/80 max-w-2xl mx-auto leading-relaxed">
+            Un viaje a través de nuestras capturas favoritas. Pasa el cursor sobre una foto para pausar y ver más de cerca.
+          </p>
+        </div>
+        
+        <InfiniteCarousel items={timelinePhotos} speed={50} />
+      </section>
+
+      {/* RSVP Section */}
+      <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] min-h-screen flex flex-col justify-center py-24 px-6 border-t border-[#B76E79]/20">
+        <div className="max-w-xl mx-auto text-center w-full">
+          <h2 className="text-4xl md:text-5xl mb-8 font-light text-[#b2693f]">Confirmar Asistencia</h2>
+          <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 1 de julio.</p>
+          
+          <form onSubmit={handleWhatsAppSubmit} className="flex flex-col gap-6 text-left">
+            <input 
+              type="text" 
+              required
+              value={rsvpData.name}
+              onChange={(e) => setRsvpData({ ...rsvpData, name: e.target.value })}
+              placeholder="Nombre Completo" 
+              className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors" 
+            />
+            
+            <div className="flex flex-col gap-2">
+              <label htmlFor="guestCount" className="text-[#b2693f]/80 text-sm ml-2">Número Total de Invitados (incluyéndote a ti)</label>
+              <input 
+                type="number" 
+                id="guestCount" 
+                min="1" 
+                required
+                value={rsvpData.guestCount}
+                onChange={(e) => setRsvpData({ ...rsvpData, guestCount: e.target.value })}
+                placeholder="ej., 2" 
+                className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors" 
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="guestNames" className="text-[#b2693f]/80 text-sm ml-2">Nombres de Invitados Adicionales</label>
+              <textarea 
+                id="guestNames" 
+                rows="3" 
+                required
+                value={rsvpData.additionalNames}
+                onChange={(e) => setRsvpData({ ...rsvpData, additionalNames: e.target.value })}
+                placeholder="Escribe los nombres de tus acompañantes (o 'Ninguno' si asistes solo)..." 
+                className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors resize-none"
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              className="w-full bg-[#B76E79] text-white font-semibold rounded-xl px-6 py-4 mt-2 hover:bg-[#D4AF37] hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-300"
+            >
+              Confirmar por WhatsApp
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>
   );
 }
