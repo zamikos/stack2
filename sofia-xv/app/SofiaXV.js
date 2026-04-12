@@ -7,6 +7,10 @@ const CameraIcon = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
 );
 
+const HomeIcon = ({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+);
+
 const Polaroid = ({ image, caption, date, rotation }) => {
   return (
     <div 
@@ -483,7 +487,7 @@ export default function SofiaXV() {
         className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 md:gap-10 px-6 py-1.5 bg-[#FDFBF7]/80 backdrop-blur-md border border-[#B76E79]/30 rounded-full shadow-lg overflow-x-auto max-w-[90vw] whitespace-nowrap hide-scrollbar transition-all duration-500 opacity-0 pointer-events-none"
         style={{ transform: 'translate(-50%, -20px)' }}
       >
-        <a href="#home" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Inicio</a>
+        <a href="#home" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider flex items-center"><HomeIcon className="w-4 h-4 md:w-5 md:h-5" /></a>
         <a href="#details" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Detalles</a>
         <a href="#gallery" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Galería</a>
         <a href="#mensaje" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Mensaje</a>
@@ -500,8 +504,8 @@ export default function SofiaXV() {
           <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
             <div ref={heroCardRef} className="relative w-[94vw] h-[94vh] md:w-[96vw] md:h-[96vh] origin-center overflow-hidden rounded-2xl md:rounded-3xl shadow-[0_10px_40px_rgba(183,110,121,0.3)] will-change-transform border border-[#B76E79]/20 pointer-events-auto">
               <img ref={heroImgRef}
-                src="https://images.unsplash.com/photo-1549490349-8643362247b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
-                alt="Sofia XV Cinematic" 
+                src="/images/hero/sofia-hero.jpeg" 
+                alt="Sofia Becerra Martínez - XV Celebration" 
                 className="absolute inset-0 w-full h-full object-cover will-change-transform"
               />
             </div>
