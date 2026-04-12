@@ -397,13 +397,11 @@ export default function SofiaXV() {
       const imgScale = 1 + (0.15 * easeOut); 
 
       const textScale = 0.45 + (0.45 * easeOut);
-      const textTranslateY = isDesktop ? 8 * easeOut : 10 * easeOut;
-
+      
       heroCardRef.current.style.transform = `translateY(${imgTranslateY}vh) scale(${cardScale})`;
       heroCardRef.current.style.borderRadius = `${borderRadius}px`;
       heroImgRef.current.style.transform = `scale(${imgScale})`;
-      heroTextRef.current.style.transform = `translateY(${textTranslateY}vh) scale(${textScale})`;
-
+      heroTextRef.current.style.transform = `scale(${textScale})`;
       // Navbar visibility
       if (navbarRef.current) {
         const showNav = window.scrollY > window.innerHeight * 2.5;
@@ -506,7 +504,6 @@ export default function SofiaXV() {
                 alt="Sofia XV Cinematic" 
                 className="absolute inset-0 w-full h-full object-cover will-change-transform"
               />
-              <div className="absolute inset-0 bg-[#FDFBF7]/30 backdrop-blur-[2px]"></div>
             </div>
           </div>
 
