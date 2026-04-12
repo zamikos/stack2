@@ -389,7 +389,7 @@ export default function SofiaXV() {
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const isDesktop = window.innerWidth >= 768;
 
-      const targetScale = isDesktop ? 0.60 : 0.80;
+      const targetScale = isDesktop ? 0.50 : 0.70;
       const cardScale = 1.0 - ((1.0 - targetScale) * easeOut); 
       const borderRadius = isDesktop ? (24 + (32 * easeOut)) : (16 + (16 * easeOut));
       const imgTranslateY = isDesktop ? -15 * easeOut : -5 * easeOut;
