@@ -365,7 +365,7 @@ const CountdownSection = ({
   const textColor = `rgba(178, 105, 63, ${currentAlpha})`;
 
   return (
-    <section id="countdown" ref={sectionRef} className="relative w-full h-[450vh] bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20">
+    <section id="countdown" ref={sectionRef} className="relative w-full h-[250vh] bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20">
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
         
         <canvas ref={canvasRef} className="absolute inset-0 z-50" />
@@ -695,7 +695,7 @@ export default function SofiaXV() {
         <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
           <ScrollReveal 
             text="Mis quince años marcan el comienzo de una nueva aventura, donde inicio un camino lleno de sueños y oportunidades. Dejo mi infancia en el pasado y continúo mi viaje para crear recuerdos increíbles junto a mis amigos y familia. He soñado con esta fiesta desde que era niña y me encantaría que me acompañes a celebrar esta noche tan especial y verdaderamente inolvidable."
-            scrollHeight="450vh" 
+            scrollHeight="250vh" 
             colorStart="rgba(178, 105, 63, 0.15)"
             colorEnd="#b2693f"
             className="font-playfair text-xl md:text-3xl lg:text-4xl leading-relaxed md:leading-[1.6] tracking-tight"
