@@ -468,12 +468,23 @@ export default function SofiaXV() {
   const handleAddressClick = (e) => {
     e.preventDefault();
     const address = encodeURIComponent("Carr. RíoVerde km 246 s/n-km 246, 78438 Soledad de Graciano Sánchez, S.L.P., Mexico");
-    const isApple = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const url = isApple
-      ? `maps://?q=${address}`
-      : `https://maps.google.com/?q=${address}`;
-    window.open(url, '_blank');
+
+    if (isIOS) {
+      // Try Google Maps first; if the window doesn't blur within 500ms
+      // (meaning the app didn't open), fall back to Apple Maps.
+      let opened = false;
+      const onBlur = () => { opened = true; };
+      window.addEventListener('blur', onBlur, { once: true });
+      window.location.href = `comgooglemaps://?q=${address}`;
+      setTimeout(() => {
+        window.removeEventListener('blur', onBlur);
+        if (!opened) window.location.href = `maps://?q=${address}`;
+      }, 500);
+    } else {
+      window.open(`https://maps.google.com/?q=${address}`, '_blank');
+    }
   };
 
   const handleWhatsAppSubmit = (e) => {
@@ -540,18 +551,18 @@ export default function SofiaXV() {
       {/* Details Section */}
       <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] min-h-screen flex flex-col justify-center py-16 px-6 border-t border-[#B76E79]/20">
         <div className="max-w-4xl mx-auto text-center w-full">
+          <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-8 md:mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
+            <img
+              src="/images/salon/salon.jpg"
+              alt="Salón de Eventos Elegance"
+              className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+            />
+          </div>
+
           <h2 className="text-3xl md:text-5xl mb-4 md:mb-6 font-light text-[#b2693f]">Una Noche para Recordar</h2>
           <p className="text-base md:text-lg text-[#b2693f]/80 leading-relaxed mb-8 md:mb-10">
             Acompáñanos a una velada inolvidable de elegancia, música y celebración mientras Sofía entra en un nuevo capítulo de su vida. Estamos emocionados de compartir este hermoso hito con nuestros familiares y amigos más cercanos.
           </p>
-          
-          <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-8 md:mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
-            <img 
-              src="/images/salon/salon.jpg"  
-              alt="Salón de Eventos Elegance" 
-              className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-            />
-          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-left">
             <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
