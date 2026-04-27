@@ -366,10 +366,10 @@ export default function SofiaXV() {
   const photos = [
     { id: 1, url: '/images/stacked-polaroids/grass_sf.jpeg', caption: '', rotation: -4 },
     { id: 2, url: '/images/stacked-polaroids/beach_sf.jpeg', caption: '', rotation: 3 },
-    { id: 3, url: '/images/stacked-polaroids/forrest_sf.jpeg', caption: '', rotation: -2 },
-    { id: 4, url: '/images/stacked-polaroids/palace_sf.jpeg', caption: '', rotation: 4 },
-    { id: 5, url: '/images/stacked-polaroids/cdmx.jpeg', caption: '', rotation: -5 },
-    { id: 6, url: '/images/stacked-polaroids/tree_sf.jpeg', caption: '', rotation: 6 }
+    { id: 3, url: '/images/stacked-polaroids/forrest.jpeg', caption: '', rotation: -2 },
+    { id: 4, url: '/images/stacked-polaroids/palace.jpeg', caption: '', rotation: 4 },
+    { id: 5, url: '/images/stacked-polaroids/cdmx.jpg', caption: '', rotation: -5 },
+    { id: 6, url: '/images/stacked-polaroids/tree.jpeg', caption: '', rotation: 6 }
   ];
 
   const timelinePhotos = [
@@ -634,7 +634,7 @@ export default function SofiaXV() {
       <section id="mensaje" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20">
         <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
           <ScrollReveal 
-            text="A lo largo de estos quince años, he aprendido que la magia de la vida reside en los momentos compartidos. Gracias por ser parte de mi historia, por su amor incondicional, y por acompañarme a celebrar esta noche tan especial y verdaderamente inolvidable."
+            text="Mis quince años marcan el comienzo de una nueva aventura, donde inicio un camino lleno de sueños y oportunidades. Dejo mi infancia en el pasado y continúo mi viaje para crear recuerdos increíbles junto a mis amigos y familia. He soñado con esta fiesta desde que era niña y me encantaría que me acompañes a celebrar esta noche tan especial y verdaderamente inolvidable."
             scrollHeight="450vh" 
             colorStart="rgba(178, 105, 63, 0.15)"
             colorEnd="#b2693f"
