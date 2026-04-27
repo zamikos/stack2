@@ -632,7 +632,7 @@ export default function SofiaXV() {
               <p className="text-sm md:text-base text-[#b2693f]/80">Sábado, 1 de Agosto<br />A partir de las 7:00 PM</p>
             </div>
             <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
-              <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">El Lugar</h3>
+              <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">Ubicación</h3>
               <a
                 href="#"
                 onClick={handleAddressClick}
