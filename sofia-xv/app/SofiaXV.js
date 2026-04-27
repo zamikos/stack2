@@ -46,15 +46,77 @@ const Polaroid = ({ image, caption, date, rotation }) => {
 
 const InfiniteCarousel = ({ items, speed = 40 }) => {
   const extendedItems = [...items, ...items, ...items];
+  const trackRef = useRef(null);
+  const offsetRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartOffsetRef = useRef(0);
+  const lastTimestampRef = useRef(null);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const getSetWidth = () => track.scrollWidth / 3;
+
+    const animate = (timestamp) => {
+      if (!isDraggingRef.current) {
+        if (lastTimestampRef.current !== null) {
+          const delta = timestamp - lastTimestampRef.current;
+          const setWidth = getSetWidth();
+          offsetRef.current += (setWidth / (speed * 1000)) * delta;
+          if (offsetRef.current >= setWidth) offsetRef.current -= setWidth;
+          if (offsetRef.current < 0) offsetRef.current += setWidth;
+        }
+        lastTimestampRef.current = timestamp;
+      } else {
+        lastTimestampRef.current = null;
+      }
+      track.style.transform = `translateX(-${offsetRef.current}px)`;
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [speed]);
+
+  const onDragStart = (clientX) => {
+    isDraggingRef.current = true;
+    dragStartXRef.current = clientX;
+    dragStartOffsetRef.current = offsetRef.current;
+  };
+
+  const onDragMove = (clientX) => {
+    if (!isDraggingRef.current || !trackRef.current) return;
+    const setWidth = trackRef.current.scrollWidth / 3;
+    let newOffset = dragStartOffsetRef.current + (dragStartXRef.current - clientX);
+    newOffset = ((newOffset % setWidth) + setWidth) % setWidth;
+    offsetRef.current = newOffset;
+  };
+
+  const onDragEnd = () => { isDraggingRef.current = false; };
+
   return (
-    <div className="relative w-full overflow-hidden py-10 bg-transparent border-y border-[#B76E79]/20">
+    <div
+      className="relative w-full overflow-hidden py-10 bg-transparent border-y border-[#B76E79]/20 cursor-grab active:cursor-grabbing select-none"
+      onMouseDown={(e) => onDragStart(e.clientX)}
+      onMouseMove={(e) => onDragMove(e.clientX)}
+      onMouseUp={onDragEnd}
+      onMouseLeave={onDragEnd}
+      onTouchStart={(e) => onDragStart(e.touches[0].clientX)}
+      onTouchMove={(e) => { e.preventDefault(); onDragMove(e.touches[0].clientX); }}
+      onTouchEnd={onDragEnd}
+      style={{ touchAction: 'none' }}
+    >
       <div className="flex items-center">
-        <div 
-          className="flex animate-scroll whitespace-nowrap"
-          style={{ animation: `scroll ${speed}s linear infinite`, width: 'max-content' }}
+        <div
+          ref={trackRef}
+          className="flex whitespace-nowrap"
+          style={{ width: 'max-content' }}
         >
           {extendedItems.map((item, index) => (
-            <Polaroid 
+            <Polaroid
               key={`${item.id}-${index}`}
               image={item.image}
               caption={item.caption}
@@ -64,8 +126,8 @@ const InfiniteCarousel = ({ items, speed = 40 }) => {
           ))}
         </div>
       </div>
-      <div className="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-[#F2DEE3] to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-[#F2DEE3] to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-[#F2DEE3] to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-[#F2DEE3] to-transparent z-10 pointer-events-none" />
     </div>
   );
 };
