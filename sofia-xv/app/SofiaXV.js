@@ -598,7 +598,7 @@ export default function SofiaXV() {
       >
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
           
-          <h2 className="absolute top-20 md:top-32 text-4xl md:text-5xl font-light text-[#b2693f] z-0">Recuerdos</h2>
+          <h2 className="absolute top-20 md:top-32 text-4xl md:text-5xl font-light text-[#b2693f] z-0">Galería</h2>
 
           <div className="relative w-[85vw] max-w-[320px] md:max-w-[400px] aspect-[4/5] mt-12 md:mt-20">
             {photos.map((photo, index) => (
