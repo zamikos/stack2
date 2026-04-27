@@ -465,6 +465,17 @@ export default function SofiaXV() {
     };
   }, []);
 
+  const handleAddressClick = (e) => {
+    e.preventDefault();
+    const address = encodeURIComponent("Carr. RíoVerde km 246 s/n-km 246, 78438 Soledad de Graciano Sánchez, S.L.P., Mexico");
+    const isApple = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const url = isApple
+      ? `maps://?q=${address}`
+      : `https://maps.google.com/?q=${address}`;
+    window.open(url, '_blank');
+  };
+
   const handleWhatsAppSubmit = (e) => {
     e.preventDefault();
 
@@ -536,7 +547,7 @@ export default function SofiaXV() {
           
           <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-8 md:mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
             <img 
-              src="/images/hero/sofia-hero.jpeg"  
+              src="/images/salon/salon.jpg"  
               alt="Salón de Eventos Elegance" 
               className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
             />
@@ -549,7 +560,13 @@ export default function SofiaXV() {
             </div>
             <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
               <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">El Lugar</h3>
-              <p className="text-sm md:text-base text-[#b2693f]/80">Salón de Eventos Elegance<br />Carr. RíoVerde km 246 s/n-km 246, 78438 Soledad de Graciano Sánchez, S.L.P., Mexico</p>
+              <a
+                href="#"
+                onClick={handleAddressClick}
+                className="text-sm md:text-base text-[#b2693f]/80 hover:text-[#D4AF37] underline underline-offset-2 decoration-[#B76E79]/40 hover:decoration-[#D4AF37] transition-colors duration-200 cursor-pointer"
+              >
+                Salón de Eventos Elegance<br />Carr. RíoVerde km 246 s/n-km 246, 78438 Soledad de Graciano Sánchez, S.L.P., Mexico
+              </a>
             </div>
             <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
               <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">Código de Vestimenta</h3>
