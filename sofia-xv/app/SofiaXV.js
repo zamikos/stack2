@@ -364,11 +364,12 @@ export default function SofiaXV() {
   });
 
   const photos = [
-    { id: 1, url: 'https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', caption: 'Infancia', rotation: -4 },
-    { id: 2, url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', caption: 'Familia', rotation: 3 },
-    { id: 3, url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', caption: 'Quince', rotation: -2 },
-    { id: 4, url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80', caption: 'Aventuras', rotation: 4 },
-    { id: 5, url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80', caption: 'El Futuro', rotation: -5 }
+    { id: 1, url: '/images/stacked-polaroids/grass_sf.jpeg', caption: '', rotation: -4 },
+    { id: 2, url: '/images/stacked-polaroids/beach_sf.jpeg', caption: '', rotation: 3 },
+    { id: 3, url: '/images/stacked-polaroids/forrest_sf.jpeg', caption: '', rotation: -2 },
+    { id: 4, url: '/images/stacked-polaroids/palace_sf.jpeg', caption: '', rotation: 4 },
+    { id: 5, url: '/images/stacked-polaroids/cdmx.jpeg', caption: '', rotation: -5 },
+    { id: 6, url: '/images/stacked-polaroids/tree_sf.jpeg', caption: '', rotation: 6 }
   ];
 
   const timelinePhotos = [
@@ -467,23 +468,24 @@ export default function SofiaXV() {
 
   const handleAddressClick = (e) => {
     e.preventDefault();
-    const address = encodeURIComponent("Carr. RíoVerde km 246 s/n-km 246, 78438 Soledad de Graciano Sánchez, S.L.P., Mexico");
+    const lat = 22.1550011;
+    const lng = -100.900421;
+    const label = encodeURIComponent("Salón de Eventos Elegance");
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      // Try Google Maps first; if the window doesn't blur within 500ms
-      // (meaning the app didn't open), fall back to Apple Maps.
+      // Try Google Maps app first; fall back to Apple Maps if not installed.
       let opened = false;
       const onBlur = () => { opened = true; };
       window.addEventListener('blur', onBlur, { once: true });
-      window.location.href = `comgooglemaps://?q=${address}`;
+      window.location.href = `comgooglemaps://?q=${lat},${lng}&zoom=17`;
       setTimeout(() => {
         window.removeEventListener('blur', onBlur);
-        if (!opened) window.location.href = `maps://?q=${address}`;
+        if (!opened) window.location.href = `maps://?ll=${lat},${lng}&q=${label}`;
       }, 500);
     } else {
-      window.open(`https://maps.google.com/?q=${address}`, '_blank');
+      window.open(`https://maps.google.com/?q=${lat},${lng}`, '_blank');
     }
   };
 
