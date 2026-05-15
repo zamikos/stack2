@@ -365,7 +365,7 @@ const CountdownSection = ({
   const textColor = `rgba(178, 105, 63, ${currentAlpha})`;
 
   return (
-    <section id="countdown" ref={sectionRef} className="relative w-full h-[250vh] bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20">
+    <section id="countdown" ref={sectionRef} className="relative w-full h-[250vh] bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20">
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
         
         <canvas ref={canvasRef} className="absolute inset-0 z-50" />
@@ -610,8 +610,20 @@ export default function SofiaXV() {
         </div>
       </div>
 
+      {/* Presentacion Message Section */}
+      <section className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20 py-20 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="font-playfair text-xl md:text-3xl lg:text-4xl leading-relaxed md:leading-[1.6] tracking-tight text-[#b2693f] italic">
+            "Hay momentos inolvidables que se quedan en el corazón para siempre. Mis XV años marcan el comienzo de una nueva etapa en mi vida. Señor Jesús, creo en ti con todas las fuerzas de mi ser y por eso te ofrezco mi juventud, te pido que guíes mis pasos, mis acciones, decisiones y pensamientos."
+          </p>
+          <p className="text-[#b2693f]/70 text-xl md:text-3xl font-playfair italic mt-6">
+            - Sofía
+          </p>
+        </div>
+      </section>
+
       {/* Details Section */}
-      <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] min-h-screen flex flex-col justify-center py-16 px-6 border-t border-[#B76E79]/20">
+      <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] min-h-screen flex flex-col justify-center py-16 px-6 border-t border-[#B76E79]/20">
         <div className="max-w-4xl mx-auto text-center w-full">
           <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-8 md:mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
             <img
@@ -653,7 +665,7 @@ export default function SofiaXV() {
       <section 
         id="gallery" 
         ref={galleryContainerRef}
-        className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20" 
+        className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20"
         style={{ height: `${photos.length * 120}vh` }}
       >
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
@@ -691,7 +703,7 @@ export default function SofiaXV() {
       </section>
 
       {/* Personal Message Section */}
-      <section id="mensaje" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20">
+      <section id="mensaje" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20">
         <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
           <ScrollReveal 
             text="Mis quince años marcan el comienzo de una nueva aventura, donde inicio un camino lleno de sueños y oportunidades. Dejo mi infancia en el pasado y continúo mi viaje para crear recuerdos increíbles junto a mis amigos y familia. He soñado con esta fiesta desde que era niña y me encantaría que me acompañes a celebrar esta noche tan especial y verdaderamente inolvidable."
@@ -711,7 +723,7 @@ export default function SofiaXV() {
       <CountdownSection />
 
       {/* Timeline Section */}
-      <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] pt-32 pb-20 border-t border-[#B76E79]/20 overflow-hidden">
+      <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] pt-32 pb-20 border-t border-[#B76E79]/20 overflow-hidden">
         <div className="max-w-6xl mx-auto text-center px-6 mb-16">
           <h2 className="text-4xl md:text-5xl font-light text-[#b2693f] mb-6">A Través de los Años</h2>
           <p className="text-lg md:text-xl text-[#b2693f]/80 max-w-2xl mx-auto leading-relaxed">
@@ -723,7 +735,7 @@ export default function SofiaXV() {
       </section>
 
       {/* RSVP Section */}
-      <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] min-h-screen flex flex-col justify-center py-24 px-6 border-t border-[#B76E79]/20">
+      <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] min-h-screen flex flex-col justify-center py-24 px-6 border-t border-[#B76E79]/20">
         <div className="max-w-xl mx-auto text-center w-full">
           <h2 className="text-4xl md:text-5xl mb-8 font-light text-[#b2693f]">Confirmar Asistencia</h2>
           <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 1 de julio.</p>
