@@ -622,6 +622,59 @@ export default function SofiaXV() {
         </div>
       </section>
 
+      {/* Mis Padres Section */}
+      <section className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] via-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20 py-24 px-6 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#B76E79]/8 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full border border-[#B76E79]/10 pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <div className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+            <span className="text-[#D4AF37] tracking-[0.6em] text-base">✦ ✦ ✦</span>
+            <div className="h-px flex-1 max-w-[100px] bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
+          </div>
+
+          <p className="text-xs md:text-sm tracking-[0.4em] uppercase text-[#b2693f]/60 mb-3 font-sans">Con el amor de</p>
+          <h2 className="text-4xl md:text-6xl font-light text-[#b2693f] mb-14 font-playfair">Mis Padres</h2>
+
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0">
+
+            <div className="relative p-8 md:p-10 border border-[#B76E79]/25 rounded-3xl bg-[#FDFBF7]/60 backdrop-blur-sm shadow-[0_8px_30px_rgba(183,110,121,0.12)] hover:shadow-[0_14px_40px_rgba(183,110,121,0.22)] hover:border-[#D4AF37]/40 transition-all duration-500 w-64 md:w-72">
+              <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-[#D4AF37]/50 rounded-tl" />
+              <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-[#D4AF37]/50 rounded-tr" />
+              <div className="absolute bottom-3 left-3 w-5 h-5 border-b border-l border-[#D4AF37]/50 rounded-bl" />
+              <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-[#D4AF37]/50 rounded-br" />
+              <p className="font-playfair text-3xl md:text-4xl text-[#b2693f] leading-snug">Samuel<br />Becerra</p>
+            </div>
+
+            <div className="flex flex-col items-center mx-10 md:mx-14 gap-2">
+              <div className="w-px h-12 md:h-16 bg-gradient-to-b from-transparent via-[#B76E79]/30 to-transparent" />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-9 h-9 fill-[#B76E79]/50 drop-shadow-sm">
+                <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z" />
+              </svg>
+              <div className="w-px h-12 md:h-16 bg-gradient-to-b from-transparent via-[#B76E79]/30 to-transparent" />
+            </div>
+
+            <div className="relative p-8 md:p-10 border border-[#B76E79]/25 rounded-3xl bg-[#FDFBF7]/60 backdrop-blur-sm shadow-[0_8px_30px_rgba(183,110,121,0.12)] hover:shadow-[0_14px_40px_rgba(183,110,121,0.22)] hover:border-[#D4AF37]/40 transition-all duration-500 w-64 md:w-72">
+              <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-[#D4AF37]/50 rounded-tl" />
+              <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-[#D4AF37]/50 rounded-tr" />
+              <div className="absolute bottom-3 left-3 w-5 h-5 border-b border-l border-[#D4AF37]/50 rounded-bl" />
+              <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-[#D4AF37]/50 rounded-br" />
+              <p className="font-playfair text-3xl md:text-4xl text-[#b2693f] leading-snug">Lucina<br />Martínez</p>
+            </div>
+
+          </div>
+
+          <div className="flex items-center justify-center gap-4 mt-14">
+            <div className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+            <span className="text-[#D4AF37] tracking-[0.6em] text-base">✦ ✦ ✦</span>
+            <div className="h-px flex-1 max-w-[100px] bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
+          </div>
+
+        </div>
+      </section>
+
       {/* Details Section */}
       <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] min-h-screen flex flex-col justify-center py-16 px-6 border-t border-[#B76E79]/20">
         <div className="max-w-4xl mx-auto text-center w-full">
