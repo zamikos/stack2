@@ -433,11 +433,26 @@ export default function SofiaXV() {
   ];
 
   const timelinePhotos = [
-    { id: 1, image: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=800', caption: 'Primeros Pasos', date: 'ABR 2010', rotation: -2 },
-    { id: 2, image: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&q=80&w=800', caption: 'Primer Día', date: 'SEP 2014', rotation: 3 },
-    { id: 3, image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=800', caption: 'Décimo Cumpleaños', date: 'ABR 2020', rotation: -1.5 },
-    { id: 4, image: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&q=80&w=800', caption: 'Secundaria', date: 'AGO 2022', rotation: 2.5 },
-    { id: 5, image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=800', caption: 'Mis Quince', date: 'OCT 2025', rotation: -3 }
+    { id: 1,  image: '/images/timelinephotos/IMG_0627.JPG',  caption: '', date: '', rotation: -2   },
+    { id: 2,  image: '/images/timelinephotos/IMG_0667.jpg',  caption: '', date: '', rotation: 3    },
+    { id: 3,  image: '/images/timelinephotos/IMG_0672.JPG',  caption: '', date: '', rotation: -1.5 },
+    { id: 4,  image: '/images/timelinephotos/IMG_0690.jpg',  caption: '', date: '', rotation: 2.5  },
+    { id: 5,  image: '/images/timelinephotos/IMG_0706.jpg',  caption: '', date: '', rotation: -3   },
+    { id: 6,  image: '/images/timelinephotos/IMG_0708.JPG',  caption: '', date: '', rotation: 1.5  },
+    { id: 7,  image: '/images/timelinephotos/IMG_0713.jpg',  caption: '', date: '', rotation: -2.5 },
+    { id: 8,  image: '/images/timelinephotos/IMG_0736.JPG',  caption: '', date: '', rotation: 4    },
+    { id: 9,  image: '/images/timelinephotos/IMG_0968.JPG',  caption: '', date: '', rotation: -1   },
+    { id: 10, image: '/images/timelinephotos/IMG_0971.JPG',  caption: '', date: '', rotation: 3    },
+    { id: 11, image: '/images/timelinephotos/IMG_0977.jpg',  caption: '', date: '', rotation: -3.5 },
+    { id: 12, image: '/images/timelinephotos/IMG_0984.JPG',  caption: '', date: '', rotation: 2    },
+    { id: 13, image: '/images/timelinephotos/IMG_1426.jpg',  caption: '', date: '', rotation: -2   },
+    { id: 14, image: '/images/timelinephotos/IMG_1507.JPG',  caption: '', date: '', rotation: 3.5  },
+    { id: 15, image: '/images/timelinephotos/IMG_1827.jpg',  caption: '', date: '', rotation: -1.5 },
+    { id: 16, image: '/images/timelinephotos/IMG_1852.jpg',  caption: '', date: '', rotation: 2.5  },
+    { id: 17, image: '/images/timelinephotos/IMG_1859.jpg',  caption: '', date: '', rotation: -4   },
+    { id: 18, image: '/images/timelinephotos/IMG_2531.jpg',  caption: '', date: '', rotation: 1    },
+    { id: 19, image: '/images/timelinephotos/IMG_5340.JPG',  caption: '', date: '', rotation: -2.5 },
+    { id: 20, image: '/images/timelinephotos/IMG_6722.JPG',  caption: '', date: '', rotation: 3    },
   ];
 
   useEffect(() => {
@@ -784,7 +799,7 @@ export default function SofiaXV() {
           </p>
         </div>
         
-        <InfiniteCarousel items={timelinePhotos} speed={50} />
+        <InfiniteCarousel items={timelinePhotos} speed={90} />
       </section>
 
       {/* RSVP Section */}
