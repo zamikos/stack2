@@ -19,16 +19,16 @@ const Polaroid = ({ image, caption, date, rotation }) => {
     >
       <div className="bg-[#FDFBF7] p-2.5 pb-8 md:p-3 md:pb-10 shadow-[0_10px_30px_rgba(183,110,121,0.2)] border border-[#B76E79]/30 w-48 md:w-56">
         <div className="relative aspect-square overflow-hidden bg-[#F5E6D3]">
-          <img 
-            src={image} 
-            alt={caption} 
+          <img
+            src={image}
+            alt={caption}
             className="w-full h-full object-cover grayscale-[10%] hover:grayscale-0 transition-all duration-500"
           />
           <div className="absolute top-2 right-2 opacity-60">
             <CameraIcon className="text-[#D4AF37] drop-shadow-sm w-3 h-3 md:w-4 md:h-4" />
           </div>
         </div>
-        
+
         <div className="mt-3 md:mt-4 font-playfair text-[#b2693f] text-center">
           <p className="text-lg md:text-xl leading-tight mb-1">
             {caption}
@@ -776,11 +776,11 @@ export default function SofiaXV() {
       <CountdownSection />
 
       {/* Timeline Section */}
-      <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] pt-32 pb-20 border-t border-[#B76E79]/20 overflow-hidden">
+      <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] pt-16 pb-10 border-t border-[#B76E79]/20 overflow-hidden">
         <div className="max-w-6xl mx-auto text-center px-6 mb-16">
           <h2 className="text-4xl md:text-5xl font-light text-[#b2693f] mb-6">A Través de los Años</h2>
           <p className="text-lg md:text-xl text-[#b2693f]/80 max-w-2xl mx-auto leading-relaxed">
-            Un viaje a través de nuestras capturas favoritas. Pasa el cursor sobre una foto para pausar y ver más de cerca.
+            Un viaje a través de mis capturas favoritas.
           </p>
         </div>
         
