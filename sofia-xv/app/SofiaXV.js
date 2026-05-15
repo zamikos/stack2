@@ -99,21 +99,20 @@ const InfiniteCarousel = ({ items, speed = 40 }) => {
 
   return (
     <div
-      className="relative w-full overflow-hidden py-10 bg-transparent border-y border-[#B76E79]/20 cursor-grab active:cursor-grabbing select-none"
-      onMouseDown={(e) => onDragStart(e.clientX)}
+      className="relative w-full overflow-hidden py-10 bg-transparent border-y border-[#B76E79]/20"
       onMouseMove={(e) => onDragMove(e.clientX)}
       onMouseUp={onDragEnd}
       onMouseLeave={onDragEnd}
-      onTouchStart={(e) => onDragStart(e.touches[0].clientX)}
-      onTouchMove={(e) => { e.preventDefault(); onDragMove(e.touches[0].clientX); }}
-      onTouchEnd={onDragEnd}
-      style={{ touchAction: 'none' }}
     >
       <div className="flex items-center">
         <div
           ref={trackRef}
-          className="flex whitespace-nowrap"
-          style={{ width: 'max-content' }}
+          className="flex whitespace-nowrap cursor-grab active:cursor-grabbing select-none"
+          style={{ width: 'max-content', touchAction: 'none' }}
+          onMouseDown={(e) => onDragStart(e.clientX)}
+          onTouchStart={(e) => onDragStart(e.touches[0].clientX)}
+          onTouchMove={(e) => { e.preventDefault(); onDragMove(e.touches[0].clientX); }}
+          onTouchEnd={onDragEnd}
         >
           {extendedItems.map((item, index) => (
             <Polaroid
@@ -716,40 +715,96 @@ export default function SofiaXV() {
       </section>
 
       {/* Details Section */}
-      <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] min-h-screen flex flex-col justify-center py-16 px-6 border-t border-[#B76E79]/20">
-        <div className="max-w-4xl mx-auto text-center w-full">
-          <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-8 md:mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
+      <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] py-20 px-6 border-t border-[#B76E79]/20 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full border border-[#B76E79]/5 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full border border-[#B76E79]/5 pointer-events-none" />
+
+        <div className="max-w-3xl mx-auto text-center w-full relative z-10">
+          <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
             <img
               src="/images/salon/salon.jpg"
               alt="Salón de Eventos Elegance"
               className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#b2693f]/20 to-transparent" />
           </div>
 
-          <h2 className="text-3xl md:text-5xl mb-4 md:mb-6 font-light text-[#b2693f]">Una Noche para Recordar</h2>
-          <p className="text-base md:text-lg text-[#b2693f]/80 leading-relaxed mb-8 md:mb-10">
-            Acompáñanos a una velada inolvidable de elegancia, música y celebración mientras Sofía entra en un nuevo capítulo de su vida. Estamos emocionados de compartir este hermoso hito con nuestros familiares y amigos más cercanos.
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+            <span className="text-[#D4AF37]/70 text-xs tracking-[0.5em]">✦</span>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
+          </div>
+          <h2 className="text-3xl md:text-5xl mb-4 font-light text-[#b2693f] font-playfair">Una Noche para Recordar</h2>
+          <p className="text-base md:text-lg text-[#b2693f]/70 leading-relaxed mb-12 max-w-xl mx-auto">
+            Acompáñanos a una velada inolvidable de elegancia, música y celebración mientras Sofía entra en un nuevo capítulo de su vida.
           </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-left">
-            <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
-              <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">La Fecha</h3>
-              <p className="text-sm md:text-base text-[#b2693f]/80">Sábado, 1 de Agosto<br />A partir de las 7:00 PM</p>
+
+          {/* Detail rows */}
+          <div className="text-left space-y-0">
+
+            {/* La Fecha */}
+            <div className="relative flex items-center gap-5 md:gap-8 py-8 border-b border-[#B76E79]/15 group/row">
+              <div className="relative z-10 flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl border border-[#D4AF37]/50 bg-gradient-to-b from-[#b2693f] to-[#944f2c] flex flex-col items-center justify-center shadow-[0_6px_20px_rgba(178,105,63,0.35)] group-hover/row:shadow-[0_8px_28px_rgba(178,105,63,0.45)] transition-shadow duration-300">
+                <span className="text-[9px] tracking-[0.25em] text-white/60 uppercase font-sans">Ago</span>
+                <span className="text-3xl md:text-4xl font-playfair text-white leading-none">1</span>
+                <span className="text-[9px] tracking-[0.2em] text-white/60 uppercase font-sans">2025</span>
+              </div>
+              <div className="relative z-10 flex-1">
+                <p className="text-[10px] tracking-[0.45em] uppercase text-[#b2693f]/50 mb-1 font-sans">La Fecha</p>
+                <p className="font-playfair text-xl md:text-3xl text-[#b2693f]">Sábado, 1 de Agosto</p>
+                <p className="text-sm md:text-base text-[#b2693f]/65 mt-1">A partir de las 7:00 PM</p>
+              </div>
             </div>
-            <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
-              <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">Ubicación</h3>
-              <a
-                href="#"
-                onClick={handleAddressClick}
-                className="text-sm md:text-base text-[#b2693f]/80 hover:text-[#D4AF37] underline underline-offset-2 decoration-[#B76E79]/40 hover:decoration-[#D4AF37] transition-colors duration-200 cursor-pointer"
-              >
-                Salón de Eventos Elegance<br />Carr. RíoVerde km 246 s/n-km 246, 78438 Soledad de Graciano Sánchez, S.L.P., Mexico
-              </a>
+
+            {/* Ubicación */}
+            <div className="relative flex items-center gap-5 md:gap-8 py-8 border-b border-[#B76E79]/15 group/row">
+              <div className="relative z-10 flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl border border-[#D4AF37]/40 bg-[#FDFBF7]/70 backdrop-blur-sm flex items-center justify-center shadow-[0_4px_16px_rgba(183,110,121,0.12)] group-hover/row:shadow-[0_6px_22px_rgba(183,110,121,0.2)] transition-shadow duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-7 h-7 md:w-8 md:h-8 text-[#b2693f]/70" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+              </div>
+              <div className="relative z-10 flex-1">
+                <p className="text-[10px] tracking-[0.45em] uppercase text-[#b2693f]/50 mb-1 font-sans">Ubicación</p>
+                <p className="font-playfair text-xl md:text-3xl text-[#b2693f]">Salón de Eventos Elegance</p>
+                <a
+                  href="#"
+                  onClick={handleAddressClick}
+                  className="text-sm md:text-base text-[#b2693f]/60 hover:text-[#D4AF37] underline underline-offset-2 decoration-[#B76E79]/30 hover:decoration-[#D4AF37] transition-colors duration-200 cursor-pointer mt-1 block"
+                >
+                  Carr. RíoVerde km 246, Soledad de Graciano Sánchez, S.L.P.
+                </a>
+              </div>
             </div>
-            <div className="p-5 md:p-6 border border-[#B76E79]/30 rounded-2xl bg-[#FDFBF7]/80 backdrop-blur-sm transition-transform hover:-translate-y-1 hover:border-[#D4AF37]/50 duration-300">
-              <h3 className="text-lg md:text-xl font-serif mb-1 md:mb-2 text-[#b2693f]">Código de Vestimenta</h3>
-              <p className="text-sm md:text-base text-[#b2693f]/80">Formal / Etiqueta Opcional<br />Elegancia Cinematográfica</p>
+
+            {/* Código de Vestimenta */}
+            <div className="relative flex items-center gap-5 md:gap-8 py-8 group/row">
+              <div className="relative z-10 flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl border border-[#D4AF37]/40 bg-[#FDFBF7]/70 backdrop-blur-sm flex items-center justify-center shadow-[0_4px_16px_rgba(183,110,121,0.12)] group-hover/row:shadow-[0_6px_22px_rgba(183,110,121,0.2)] transition-shadow duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-7 h-7 md:w-8 md:h-8 text-[#b2693f]/70" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 2 Q12 4.5 15 2 L16.5 6.5 C17.5 7.5 18 9 18 10.5 L18 12 L6 12 L6 10.5 C6 9 6.5 7.5 7.5 6.5 Z" />
+                  <path d="M6 12 L3 22 L21 22 L18 12 Z" />
+                </svg>
+              </div>
+              <div className="relative z-10 flex-1">
+                <p className="text-[10px] tracking-[0.45em] uppercase text-[#b2693f]/50 mb-1 font-sans">Código de Vestimenta</p>
+                <p className="font-playfair text-xl md:text-3xl text-[#b2693f]">Formal / Etiqueta</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <div className="w-4 h-4 rounded-full bg-[#F5E6D3] border border-[#B76E79]/30 shadow-sm" title="Durazno" />
+                  <div className="w-4 h-4 rounded-full bg-[#F0D5DD] border border-[#B76E79]/30 shadow-sm" title="Rosa" />
+                  <div className="w-4 h-4 rounded-full bg-[#B76E79]/50 border border-[#B76E79]/30 shadow-sm" title="Vino rosa" />
+                  <div className="w-4 h-4 rounded-full bg-[#E8D5C0] border border-[#B76E79]/30 shadow-sm" title="Crema" />
+                  <div className="w-4 h-4 rounded-full bg-[#2C2C2C]/70 border border-[#B76E79]/20 shadow-sm" title="Negro" />
+                  <p className="text-xs text-[#b2693f]/50 ml-1">Tonos pastel, neutros o negro</p>
+                </div>
+              </div>
             </div>
+
+          </div>
+
+          <div className="flex items-center justify-center gap-3 mt-10">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+            <span className="text-[#D4AF37]/70 text-xs tracking-[0.5em]">✦</span>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
           </div>
         </div>
       </section>
