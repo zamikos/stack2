@@ -445,7 +445,7 @@ export default function SofiaXV() {
 
   const [rsvpData, setRsvpData] = useState({
     name: '',
-    guestCount: '',
+    attending: '',
     additionalNames: ''
   });
 
@@ -593,11 +593,13 @@ export default function SofiaXV() {
   const handleWhatsAppSubmit = (e) => {
     e.preventDefault();
 
-    const { name, guestCount, additionalNames } = rsvpData;
-    const phoneNumber = "17078494798"; 
+    const { name, attending, additionalNames } = rsvpData;
+    const phoneNumber = "17078494798";
 
-    const message = `¡Hola! Me gustaría confirmar mi asistencia a los XV de Sofía.\n\n*Nombre:* ${name}\n*Total de invitados:* ${guestCount}\n*Acompañantes:* ${additionalNames}`;
-    
+    const message = attending === 'yes'
+      ? `¡Hola! Me gustaría confirmar mi asistencia a los XV de Sofía.\n\n*Nombre:* ${name}\n*Asistiré:* Sí ✅\n*Acompañantes:* ${additionalNames}`
+      : `¡Hola! Lamentablemente no podré asistir a los XV de Sofía.\n\n*Nombre:* ${name}\n*Asistiré:* No ❌\n*Acompañantes:* ${additionalNames}`;
+
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
@@ -625,6 +627,7 @@ export default function SofiaXV() {
         <a href="#mensaje" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Mensaje</a>
         <a href="#countdown" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Conteo</a>
         <a href="#timeline" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Historia</a>
+        <a href="#regalos" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Regalos</a>
         <a href="#rsvp" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">RSVP</a>
       </nav>
 
@@ -929,6 +932,67 @@ export default function SofiaXV() {
         <InfiniteCarousel items={timelinePhotos} speed={90} />
       </section>
 
+      {/* Mesa de Regalos Section */}
+      <section id="regalos" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] py-20 px-6 border-t border-[#B76E79]/20 overflow-hidden">
+        <Butterfly className="top-[8%] left-[4%] w-11 h-7 opacity-[0.14]" rotate={-20} delay={1} duration={7} />
+        <Butterfly className="bottom-[10%] right-[4%] w-9 h-6 opacity-[0.13]" rotate={25} delay={3} duration={8} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#B76E79]/6 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full border border-[#B76E79]/8 pointer-events-none" />
+
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+            <span className="text-[#D4AF37] tracking-[0.6em] text-base">✦ ✦ ✦</span>
+            <div className="h-px flex-1 max-w-[100px] bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
+          </div>
+
+          <p className="text-xs md:text-sm tracking-[0.4em] uppercase text-[#b2693f]/60 mb-2 font-sans">Con cariño</p>
+          <h2 className="text-4xl md:text-5xl font-light text-[#b2693f] mb-8 font-playfair">Mesa de Regalos</h2>
+
+          <p className="font-playfair text-lg md:text-xl text-[#b2693f]/80 italic leading-relaxed mb-12 max-w-2xl mx-auto">
+            Mi mejor regalo es compartir contigo este gran día. Sin embargo, si deseas obsequiarme algo, puedo sugerirte las siguientes opciones:
+          </p>
+
+          {/* Lluvia de Sobres Card */}
+          <div className="relative p-8 md:p-10 border border-[#B76E79]/25 rounded-3xl bg-[#FDFBF7]/60 backdrop-blur-sm shadow-[0_8px_30px_rgba(183,110,121,0.12)] hover:shadow-[0_14px_40px_rgba(183,110,121,0.22)] hover:border-[#D4AF37]/40 transition-all duration-500 max-w-xl mx-auto">
+            <div className="absolute top-3 left-3 w-5 h-5 border-t border-l border-[#D4AF37]/50 rounded-tl" />
+            <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-[#D4AF37]/50 rounded-tr" />
+            <div className="absolute bottom-3 left-3 w-5 h-5 border-b border-l border-[#D4AF37]/50 rounded-bl" />
+            <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r border-[#D4AF37]/50 rounded-br" />
+
+            {/* Envelope icon */}
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl border border-[#D4AF37]/50 bg-gradient-to-b from-[#b2693f] to-[#944f2c] flex items-center justify-center shadow-[0_6px_20px_rgba(178,105,63,0.35)]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                  <polyline points="2,5 12,13 22,5" />
+                </svg>
+              </div>
+            </div>
+
+            <h3 className="font-playfair text-2xl md:text-3xl text-[#b2693f] mb-4">¡Lluvia de Sobres!</h3>
+
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-10 bg-gradient-to-r from-transparent to-[#D4AF37]/40" />
+              <span className="text-[#D4AF37]/60 text-xs tracking-[0.4em]">✦</span>
+              <div className="h-px w-10 bg-gradient-to-l from-transparent to-[#D4AF37]/40" />
+            </div>
+
+            <p className="text-[#b2693f]/70 leading-relaxed text-base md:text-lg font-playfair">
+              La lluvia de sobres es la tradición de regalar dinero en efectivo a la quinceañera en un sobre el día del evento.
+            </p>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 mt-12">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+            <span className="text-[#D4AF37]/70 text-xs tracking-[0.5em]">✦</span>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
+          </div>
+
+        </div>
+      </section>
+
       {/* RSVP Section */}
       <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] min-h-screen flex flex-col justify-center py-24 px-6 border-t border-[#B76E79]/20 overflow-hidden">
         <Butterfly className="top-[10%] left-[5%] w-12 h-8 opacity-[0.16]" rotate={15} delay={1} duration={6.5} />
@@ -938,45 +1002,61 @@ export default function SofiaXV() {
           <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 1 de julio.</p>
           
           <form onSubmit={handleWhatsAppSubmit} className="flex flex-col gap-6 text-left">
-            <input 
-              type="text" 
+            <input
+              type="text"
               required
               value={rsvpData.name}
               onChange={(e) => setRsvpData({ ...rsvpData, name: e.target.value })}
-              placeholder="Nombre Completo" 
-              className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors" 
+              placeholder="Nombre Completo"
+              className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors"
             />
-            
-            <div className="flex flex-col gap-2">
-              <label htmlFor="guestCount" className="text-[#b2693f]/80 text-sm ml-2">Número Total de Invitados (incluyéndote a ti)</label>
-              <input 
-                type="number" 
-                id="guestCount" 
-                min="1" 
-                required
-                value={rsvpData.guestCount}
-                onChange={(e) => setRsvpData({ ...rsvpData, guestCount: e.target.value })}
-                placeholder="ej., 2" 
-                className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors" 
-              />
+
+            {/* Attendance toggle */}
+            <div className="flex flex-col gap-3">
+              <p className="text-[#b2693f]/80 text-sm ml-2">¿Podrás asistir?</p>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setRsvpData({ ...rsvpData, attending: 'yes' })}
+                  className={`py-4 px-4 rounded-xl border font-playfair text-base transition-all duration-300 ${
+                    rsvpData.attending === 'yes'
+                      ? 'bg-[#B76E79] border-[#B76E79] text-white shadow-[0_4px_14px_rgba(183,110,121,0.4)]'
+                      : 'bg-[#FDFBF7] border-[#B76E79]/40 text-[#b2693f] hover:border-[#B76E79] hover:bg-[#F5E6D3]'
+                  }`}
+                >
+                  Sí asistiré ✓
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRsvpData({ ...rsvpData, attending: 'no' })}
+                  className={`py-4 px-4 rounded-xl border font-playfair text-base transition-all duration-300 ${
+                    rsvpData.attending === 'no'
+                      ? 'bg-[#b2693f] border-[#b2693f] text-white shadow-[0_4px_14px_rgba(178,105,63,0.35)]'
+                      : 'bg-[#FDFBF7] border-[#B76E79]/40 text-[#b2693f] hover:border-[#b2693f] hover:bg-[#F5E6D3]'
+                  }`}
+                >
+                  No asistiré ✗
+                </button>
+              </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+<div className="flex flex-col gap-2">
               <label htmlFor="guestNames" className="text-[#b2693f]/80 text-sm ml-2">Nombres de Invitados Adicionales</label>
-              <textarea 
-                id="guestNames" 
-                rows="3" 
-                required
+              <textarea
+                id="guestNames"
+                rows="3"
+                required={rsvpData.attending === 'yes'}
                 value={rsvpData.additionalNames}
                 onChange={(e) => setRsvpData({ ...rsvpData, additionalNames: e.target.value })}
-                placeholder="Escribe los nombres de tus acompañantes (o 'Ninguno' si asistes solo)..." 
+                placeholder="Escribe los nombres de tus acompañantes (o 'Ninguno' si asistes solo)..."
                 className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors resize-none"
               ></textarea>
             </div>
 
-            <button 
-              type="submit" 
-              className="w-full bg-[#B76E79] text-white font-semibold rounded-xl px-6 py-4 mt-2 hover:bg-[#D4AF37] hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-300"
+            <button
+              type="submit"
+              disabled={!rsvpData.attending}
+              className="w-full bg-[#B76E79] text-white font-semibold rounded-xl px-6 py-4 mt-2 hover:bg-[#D4AF37] hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#B76E79] disabled:hover:shadow-none"
             >
               Confirmar por WhatsApp
             </button>
