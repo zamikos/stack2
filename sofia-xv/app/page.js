@@ -1,5 +1,5 @@
-import SofiaXV from './SofiaXV';
+import EnvelopeLanding from './EnvelopeLanding';
 
 export default function Page() {
-  return <SofiaXV />;
+  return <EnvelopeLanding />;
 }
