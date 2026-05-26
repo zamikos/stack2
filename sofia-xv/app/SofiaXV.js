@@ -59,7 +59,7 @@ const Polaroid = ({ image, caption, date, rotation }) => {
           <p className="text-lg md:text-xl leading-tight mb-1">
             {caption}
           </p>
-          <div className="mt-2 md:mt-3 border-t border-[#B76E79]/20 pt-2">
+          <div className="mt-2 md:mt-3 pt-2">
             <span className="text-[9px] md:text-[10px] text-[#b2693f]/70 font-mono uppercase tracking-widest font-sans">
               {date}
             </span>
@@ -392,7 +392,7 @@ const CountdownSection = ({
   const textColor = `rgba(178, 105, 63, ${currentAlpha})`;
 
   return (
-    <section id="countdown" ref={sectionRef} className="relative w-full h-[250vh] bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20">
+    <section id="countdown" ref={sectionRef} className="relative w-full h-[250vh] bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3]">
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
         
         <canvas ref={canvasRef} className="absolute inset-0 z-50" />
@@ -733,7 +733,7 @@ export default function SofiaXV() {
       </div>
 
       {/* Presentacion Message Section */}
-      <section className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20 py-24 px-6 overflow-hidden">
+      <section className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] py-24 px-6 overflow-hidden">
         <Butterfly className="top-[7%] left-[4%] w-12 h-8 opacity-[0.18]" rotate={-15} delay={0} duration={7} />
         <Butterfly className="bottom-[10%] right-[5%] w-9 h-6 opacity-[0.15]" rotate={28} delay={2.5} duration={6} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-[#B76E79]/8 pointer-events-none" />
@@ -772,7 +772,7 @@ export default function SofiaXV() {
       </section>
 
       {/* Bible Verse Section */}
-      <section className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20 py-24 px-6 overflow-hidden">
+      <section className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] py-24 px-6 overflow-hidden">
         <Butterfly className="top-[15%] left-[4%] w-10 h-7 opacity-[0.13]" rotate={-15} delay={0.5} duration={7} />
         <Butterfly className="bottom-[15%] right-[4%] w-9 h-6 opacity-[0.12]" rotate={20} delay={2} duration={8} />
         <div className="max-w-2xl mx-auto text-center relative z-10">
@@ -795,7 +795,7 @@ export default function SofiaXV() {
       </section>
 
       {/* Mis Padres Section */}
-      <section className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] via-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20 py-16 px-6 overflow-hidden">
+      <section className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] py-16 px-6 overflow-hidden">
         <Butterfly className="top-[18%] right-[6%] w-10 h-7 opacity-[0.14]" rotate={32} delay={1} duration={8} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#B76E79]/8 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full border border-[#B76E79]/10 pointer-events-none" />
@@ -849,7 +849,7 @@ export default function SofiaXV() {
       </section>
 
       {/* Details Section */}
-      <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] py-20 px-6 border-t border-[#B76E79]/20 overflow-hidden">
+      <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] py-20 px-6 overflow-hidden">
         <Butterfly className="top-[10%] right-[3%] w-12 h-8 opacity-[0.15]" rotate={-22} delay={3} duration={7} />
         <Butterfly className="bottom-[3%] left-[48%] w-9 h-6 opacity-[0.14]" rotate={12} delay={1.5} duration={6.5} />
         <Butterfly className="top-[45%] right-[5%] w-10 h-7 opacity-[0.13]" rotate={-8} delay={0.8} duration={8} />
@@ -945,7 +945,7 @@ export default function SofiaXV() {
       <section 
         id="gallery" 
         ref={galleryContainerRef}
-        className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20"
+        className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3]"
         style={{ height: `${photos.length * 120}vh` }}
       >
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
@@ -987,7 +987,7 @@ export default function SofiaXV() {
       </section>
 
       {/* Personal Message Section */}
-      <section id="mensaje" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20">
+      <section id="mensaje" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD]">
         <div className="max-w-4xl mx-auto px-4 md:px-8 w-full">
           <ScrollReveal
             text="Mis quince años marcan el comienzo de una nueva aventura, donde inicio un camino lleno de sueños y oportunidades. Dejo mi infancia en el pasado y continúo mi viaje para crear recuerdos increíbles junto a mis amigos y familia. He soñado con esta fiesta desde que era niña y me encantaría que me acompañes a celebrar esta noche tan especial y verdaderamente inolvidable."
@@ -1008,7 +1008,7 @@ export default function SofiaXV() {
       <CountdownSection />
 
       {/* Timeline Section */}
-      <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] pt-16 pb-10 border-t border-[#B76E79]/20 overflow-hidden">
+      <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] pt-16 pb-10 overflow-hidden">
         <Butterfly className="top-[18%] right-[3%] w-10 h-7 opacity-[0.13]" rotate={-28} delay={4} duration={7.5} />
         <Butterfly className="bottom-[12%] left-[4%] w-9 h-6 opacity-[0.14]" rotate={14} delay={2} duration={6.5} />
         <div className="max-w-6xl mx-auto text-center px-6 mb-16">
@@ -1022,7 +1022,7 @@ export default function SofiaXV() {
       </section>
 
       {/* Mesa de Regalos Section */}
-      <section id="regalos" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] py-20 px-6 border-t border-[#B76E79]/20 overflow-hidden">
+      <section id="regalos" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] py-20 px-6 overflow-hidden">
         <Butterfly className="top-[8%] left-[4%] w-11 h-7 opacity-[0.14]" rotate={-20} delay={1} duration={7} />
         <Butterfly className="bottom-[10%] right-[4%] w-9 h-6 opacity-[0.13]" rotate={25} delay={3} duration={8} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#B76E79]/6 pointer-events-none" />
@@ -1083,7 +1083,7 @@ export default function SofiaXV() {
       </section>
 
       {/* RSVP Section */}
-      <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] min-h-screen flex flex-col justify-center py-24 px-6 border-t border-[#B76E79]/20 overflow-hidden">
+      <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] min-h-screen flex flex-col justify-center py-24 px-6 overflow-hidden">
         <Butterfly className="top-[10%] left-[5%] w-12 h-8 opacity-[0.16]" rotate={15} delay={1} duration={6.5} />
         <Butterfly className="bottom-[18%] right-[5%] w-9 h-6 opacity-[0.14]" rotate={-12} delay={3.5} duration={7.5} />
         <div className="max-w-xl mx-auto text-center w-full">
