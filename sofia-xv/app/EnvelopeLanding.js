@@ -98,29 +98,26 @@ export default function EnvelopeLanding() {
 
       {/* ── Title ── */}
       <div
-        className="text-center mb-10 md:mb-14"
+        className="text-center mb-5 md:mb-7"
         style={{
           opacity:       isOpen ? 0 : 1,
           transition:    'opacity 0.5s ease',
           pointerEvents: isOpen ? 'none' : 'auto',
         }}
       >
-        <p className="text-[10px] md:text-xs tracking-[0.55em] uppercase text-[#b2693f]/50 mb-4 font-sans">
-          Una celebración especial
-        </p>
-        <h1 className="font-cursive-elegant text-7xl md:text-8xl text-[#b2693f] leading-none mb-5">
+        <h1 className="font-cursive-elegant text-5xl md:text-6xl text-[#b2693f] leading-none mb-3">
           Mi Quinceañera
         </h1>
-        <div className="flex items-center justify-center gap-3 mb-5">
-          <div className="h-px w-20 bg-gradient-to-r from-transparent to-[#D4AF37]/55" />
-          <span className="text-[#D4AF37]/75 text-sm">✦</span>
-          <div className="h-px w-20 bg-gradient-to-l from-transparent to-[#D4AF37]/55" />
+        <div className="flex items-center justify-center gap-3 mb-3">
+          <div className="h-px w-14 bg-gradient-to-r from-transparent to-[#D4AF37]/55" />
+          <span className="text-[#D4AF37]/75 text-xs">✦</span>
+          <div className="h-px w-14 bg-gradient-to-l from-transparent to-[#D4AF37]/55" />
         </div>
         <p
-          className="font-playfair text-base md:text-lg text-[#b2693f]/70 italic"
+          className="font-playfair text-sm md:text-base text-[#b2693f]/70 italic"
           style={{ animation: 'hintPulse 2.8s ease-in-out infinite' }}
         >
-          Haz clic para abrir mi invitación
+          Haz click para abrir mi invitación
         </p>
       </div>
 
