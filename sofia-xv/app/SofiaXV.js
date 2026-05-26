@@ -597,7 +597,7 @@ export default function SofiaXV() {
     e.preventDefault();
 
     const { name, attending, additionalNames } = rsvpData;
-    const phoneNumber = "17078494798";
+    const phoneNumber = "17073963858";
 
     const message = attending === 'yes'
       ? `¡Hola! Me gustaría confirmar mi asistencia a los XV de Sofía.\n\n*Nombre:* ${name}\n*Asistiré:* Sí ✅\n*Acompañantes:* ${additionalNames}`
