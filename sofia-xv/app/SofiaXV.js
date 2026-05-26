@@ -808,7 +808,7 @@ export default function SofiaXV() {
             <div className="h-px flex-1 max-w-[100px] bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
           </div>
 
-          <p className="text-xs md:text-sm tracking-[0.4em] uppercase text-[#b2693f]/60 mb-2 font-sans">Con la bendición de Dios, el amor y apoyo de mis</p>
+          <p className="text-xs md:text-sm tracking-[0.4em] uppercase text-[#b2693f]/60 mb-2 font-sans">Con la bendición de Dios, el amor y apoyo de</p>
           <h2 className="text-4xl md:text-5xl font-light text-[#b2693f] mb-10 font-playfair">Mis Padres</h2>
 
           <div className="flex flex-row items-center justify-center">
