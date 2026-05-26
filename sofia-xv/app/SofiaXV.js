@@ -440,11 +440,14 @@ export default function SofiaXV() {
   const heroCardRef = useRef(null);
   const heroImgRef = useRef(null);
   const navbarRef = useRef(null);
+  const mobileNavRef = useRef(null);
 
   const galleryContainerRef = useRef(null);
   const polaroidRefs = useRef([]);
 
   const { isPlaying, toggleMusic } = useAudio();
+
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const [rsvpData, setRsvpData] = useState({
     name: '',
@@ -512,11 +515,16 @@ export default function SofiaXV() {
       heroImgRef.current.style.transform = `scale(${imgScale})`;
       heroTextRef.current.style.transform = `scale(${textScale})`;
       // Navbar visibility
+      const showNav = window.scrollY > window.innerHeight * 2.5;
       if (navbarRef.current) {
-        const showNav = window.scrollY > window.innerHeight * 2.5;
         navbarRef.current.style.opacity = showNav ? '1' : '0';
         navbarRef.current.style.pointerEvents = showNav ? 'auto' : 'none';
         navbarRef.current.style.transform = `translate(-50%, ${showNav ? '0' : '-20px'})`;
+      }
+      if (mobileNavRef.current) {
+        mobileNavRef.current.style.opacity = showNav ? '1' : '0';
+        mobileNavRef.current.style.pointerEvents = showNav ? 'auto' : 'none';
+        mobileNavRef.current.style.transform = `translateY(${showNav ? '0' : '-20px'})`;
       }
 
       // Gallery scroll stack
@@ -645,20 +653,54 @@ export default function SofiaXV() {
         }
       `}</style>
       {/* Floating Navbar */}
-      <nav 
+      {/* Desktop pill */}
+      <nav
         ref={navbarRef}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 md:gap-10 px-6 py-1.5 bg-[#FDFBF7]/80 backdrop-blur-md border border-[#B76E79]/30 rounded-full shadow-lg overflow-x-auto max-w-[90vw] whitespace-nowrap hide-scrollbar transition-all duration-500 opacity-0 pointer-events-none"
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-8 px-8 py-2.5 bg-[#FDFBF7]/80 backdrop-blur-md border border-[#B76E79]/30 rounded-full shadow-lg transition-all duration-500 opacity-0 pointer-events-none"
         style={{ transform: 'translate(-50%, -20px)' }}
       >
-        <a href="#home" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider flex items-center"><HomeIcon className="w-4 h-4 md:w-5 md:h-5" /></a>
-        <a href="#details" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Detalles</a>
-        <a href="#gallery" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Galería</a>
-        <a href="#mensaje" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Mensaje</a>
-        <a href="#countdown" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Conteo</a>
-        <a href="#timeline" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Historia</a>
-        <a href="#regalos" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Regalos</a>
-        <a href="#rsvp" className="font-playfair text-xs md:text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">RSVP</a>
+        <a href="#home" className="text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors flex items-center"><HomeIcon className="w-4 h-4" /></a>
+        <a href="#details" className="font-playfair text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Detalles</a>
+        <a href="#gallery" className="font-playfair text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Galería</a>
+        <a href="#mensaje" className="font-playfair text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Mensaje</a>
+        <a href="#timeline" className="font-playfair text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Historia</a>
+        <a href="#regalos" className="font-playfair text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">Regalos</a>
+        <a href="#rsvp" className="font-playfair text-sm text-[#b2693f]/80 hover:text-[#D4AF37] transition-colors tracking-wider">RSVP</a>
       </nav>
+
+      {/* Mobile hamburger button */}
+      <div
+        ref={mobileNavRef}
+        className="fixed top-5 right-5 z-50 md:hidden transition-all duration-500 opacity-0 pointer-events-none"
+        style={{ transform: 'translateY(-20px)' }}
+      >
+        <button
+          onClick={() => setMenuOpen(o => !o)}
+          className="w-11 h-11 rounded-full bg-[#FDFBF7]/85 backdrop-blur-md border border-[#B76E79]/30 shadow-lg flex flex-col items-center justify-center gap-[5px]"
+          aria-label="Menu"
+        >
+          <span className={`block w-5 h-[1.5px] bg-[#b2693f] transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
+          <span className={`block w-5 h-[1.5px] bg-[#b2693f] transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-5 h-[1.5px] bg-[#b2693f] transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
+        </button>
+      </div>
+
+      {/* Mobile menu overlay */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-40 md:hidden bg-[#FDFBF7]/95 backdrop-blur-md flex flex-col items-center justify-center gap-8"
+          onClick={() => setMenuOpen(false)}
+        >
+          <a href="#home"    onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest flex items-center gap-2"><HomeIcon className="w-5 h-5" /> Inicio</a>
+          <a href="#details" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Detalles</a>
+          <a href="#gallery" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Galería</a>
+          <a href="#mensaje" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Mensaje</a>
+          <a href="#timeline" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Historia</a>
+          <a href="#regalos" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Regalos</a>
+          <a href="#rsvp"    onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">RSVP</a>
+        </div>
+      )}
+
 
       {/* Hero Section */}
       <div id="home" ref={scrollContainerRef} className="relative w-full h-[250vh]">
@@ -766,7 +808,7 @@ export default function SofiaXV() {
             <div className="h-px flex-1 max-w-[100px] bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
           </div>
 
-          <p className="text-xs md:text-sm tracking-[0.4em] uppercase text-[#b2693f]/60 mb-2 font-sans">Con el amor de</p>
+          <p className="text-xs md:text-sm tracking-[0.4em] uppercase text-[#b2693f]/60 mb-2 font-sans">Con la bendición de Dios, el amor y apoyo de mis</p>
           <h2 className="text-4xl md:text-5xl font-light text-[#b2693f] mb-10 font-playfair">Mis Padres</h2>
 
           <div className="flex flex-row items-center justify-center">
