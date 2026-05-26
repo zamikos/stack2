@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useAudio } from './AudioProvider';
 
 // Internal SVG Icon
 const CameraIcon = ({ className }) => (
@@ -439,44 +440,11 @@ export default function SofiaXV() {
   const heroCardRef = useRef(null);
   const heroImgRef = useRef(null);
   const navbarRef = useRef(null);
-  const audioRef = useRef(null);
 
   const galleryContainerRef = useRef(null);
   const polaroidRefs = useRef([]);
 
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.volume = 0.5;
-
-    // Try immediate autoplay first
-    audio.play().then(() => setIsPlaying(true)).catch(() => {
-      // Blocked — start on first user interaction instead
-      const startOnInteraction = () => {
-        audio.play().then(() => setIsPlaying(true)).catch(() => {});
-        window.removeEventListener('click', startOnInteraction);
-        window.removeEventListener('touchstart', startOnInteraction);
-        window.removeEventListener('keydown', startOnInteraction);
-      };
-      window.addEventListener('click', startOnInteraction);
-      window.addEventListener('touchstart', startOnInteraction);
-      window.addEventListener('keydown', startOnInteraction);
-    });
-  }, []);
-
-  const toggleMusic = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
-    } else {
-      audio.play();
-      setIsPlaying(true);
-    }
-  };
+  const { isPlaying, toggleMusic } = useAudio();
 
   const [rsvpData, setRsvpData] = useState({
     name: '',
@@ -643,9 +611,6 @@ export default function SofiaXV() {
 
   return (
     <div style={{ animation: 'pageFadeIn 0.8s ease both' }}>
-      {/* Place your MP3 file at: public/music/song.mp3 */}
-      <audio ref={audioRef} src="/music/song.mp3" loop preload="auto" />
-
       {/* Floating music toggle button */}
       <button
         onClick={toggleMusic}
@@ -895,14 +860,9 @@ export default function SofiaXV() {
               <div className="relative z-10 flex-1">
                 <p className="text-[10px] tracking-[0.45em] uppercase text-[#b2693f]/50 mb-1 font-sans">Código de Vestimenta</p>
                 <p className="font-playfair text-xl md:text-3xl text-[#b2693f]">Formal / Etiqueta</p>
-                <div className="flex items-center gap-2 mt-2">
-                  <div className="w-4 h-4 rounded-full bg-[#F5E6D3] border border-[#B76E79]/30 shadow-sm" title="Durazno" />
-                  <div className="w-4 h-4 rounded-full bg-[#F0D5DD] border border-[#B76E79]/30 shadow-sm" title="Rosa" />
-                  <div className="w-4 h-4 rounded-full bg-[#B76E79]/50 border border-[#B76E79]/30 shadow-sm" title="Vino rosa" />
-                  <div className="w-4 h-4 rounded-full bg-[#E8D5C0] border border-[#B76E79]/30 shadow-sm" title="Crema" />
-                  <div className="w-4 h-4 rounded-full bg-[#2C2C2C]/70 border border-[#B76E79]/20 shadow-sm" title="Negro" />
-                  <p className="text-xs text-[#b2693f]/50 ml-1">Tonos pastel, neutros o negro</p>
-                </div>
+                <p className="text-xs text-[#b2693f]/55 mt-2 italic">
+                  Por favor evita el rosa dorado — es el color del vestido de la quinceañera.
+                </p>
               </div>
             </div>
 
@@ -993,7 +953,7 @@ export default function SofiaXV() {
           </p>
         </div>
         
-        <InfiniteCarousel items={timelinePhotos} speed={90} />
+        <InfiniteCarousel items={timelinePhotos} speed={120} />
       </section>
 
       {/* Mesa de Regalos Section */}

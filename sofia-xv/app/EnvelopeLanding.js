@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAudio } from './AudioProvider';
 
 // Pre-computed bumpy polygon for a realistic wax seal edge
 // 20 points alternating between r=36 and r=30, centered at 38,38
@@ -58,32 +59,17 @@ function WaxSeal() {
 }
 
 export default function EnvelopeLanding() {
-  const router   = useRouter();
-  const audioRef = useRef(null);
-  const [phase, setPhase]         = useState('idle'); // idle | cracking | open | fading
-  const [isPlaying, setIsPlaying] = useState(false);
+  const router = useRouter();
+  const { startMusic } = useAudio();
+  const [phase, setPhase] = useState('idle'); // idle | cracking | open | fading
 
   const handleSealClick = () => {
     if (phase !== 'idle') return;
-
-    // Start music the moment the seal is clicked
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = 0.5;
-      audio.play().then(() => setIsPlaying(true)).catch(() => {});
-    }
-
+    startMusic();
     setPhase('cracking');
     setTimeout(() => setPhase('open'),   400);   // flap starts opening
     setTimeout(() => setPhase('fading'), 1500);  // brief pause after flap fully open → fade out
     setTimeout(() => router.push('/celebration'), 2400); // navigate after fade completes
-  };
-
-  const toggleMusic = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (isPlaying) { audio.pause(); setIsPlaying(false); }
-    else           { audio.play();  setIsPlaying(true);  }
   };
 
   const isOpen   = phase === 'open' || phase === 'fading';
@@ -94,9 +80,6 @@ export default function EnvelopeLanding() {
       className="min-h-screen flex flex-col items-center justify-center py-16 px-4 overflow-hidden"
       style={{ background: 'linear-gradient(160deg, #FEF8F2 0%, #FAEbE3 45%, #F4D8CF 100%)' }}
     >
-      {/* Place your MP3 at: public/music/song.mp3 */}
-      <audio ref={audioRef} src="/music/song.mp3" loop preload="auto" />
-
       <style>{`
         @keyframes sealBreak {
           0%   { transform: translate(-50%,-50%) scale(1)    rotate(0deg);  opacity: 1; }
@@ -112,26 +95,6 @@ export default function EnvelopeLanding() {
           to   { opacity: 1; transform: translateY(0);   }
         }
       `}</style>
-
-      {/* Floating music button */}
-      <button
-        onClick={toggleMusic}
-        aria-label={isPlaying ? 'Pausar música' : 'Reproducir música'}
-        className="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-[#FDFBF7]/80 backdrop-blur-md border border-[#B76E79]/30 shadow-lg flex items-center justify-center text-[#b2693f] hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all duration-300"
-      >
-        {isPlaying ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-            <rect x="6" y="4" width="4" height="16" rx="1" />
-            <rect x="14" y="4" width="4" height="16" rx="1" />
-          </svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M9 18V5l12-2v13" />
-            <circle cx="6" cy="18" r="3" />
-            <circle cx="18" cy="16" r="3" />
-          </svg>
-        )}
-      </button>
 
       {/* ── Title ── */}
       <div

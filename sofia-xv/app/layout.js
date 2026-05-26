@@ -1,4 +1,5 @@
 import './globals.css';
+import AudioProvider from './AudioProvider';
 
 export const metadata = {
   title: 'XV Años de Sofía Becerra Martínez',
@@ -20,7 +21,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><AudioProvider>{children}</AudioProvider></body>
     </html>
   );
 }
