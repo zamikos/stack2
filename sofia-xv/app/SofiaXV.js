@@ -694,8 +694,9 @@ export default function SofiaXV() {
           <a href="#home"    onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest flex items-center gap-2"><HomeIcon className="w-5 h-5" /> Inicio</a>
           <a href="#details" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Detalles</a>
           <a href="#gallery" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Galería</a>
-          <a href="#mensaje" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Mensaje</a>
-          <a href="#timeline" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Historia</a>
+          <a href="#mensaje"   onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Mensaje</a>
+          <a href="#countdown" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Conteo</a>
+          <a href="#timeline"  onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Historia</a>
           <a href="#regalos" onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">Regalos</a>
           <a href="#rsvp"    onClick={() => setMenuOpen(false)} className="font-playfair text-2xl text-[#b2693f] hover:text-[#D4AF37] transition-colors tracking-widest">RSVP</a>
         </div>
