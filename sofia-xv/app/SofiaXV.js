@@ -729,6 +729,29 @@ export default function SofiaXV() {
         </div>
       </section>
 
+      {/* Bible Verse Section */}
+      <section className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] border-t border-[#B76E79]/20 py-24 px-6 overflow-hidden">
+        <Butterfly className="top-[15%] left-[4%] w-10 h-7 opacity-[0.13]" rotate={-15} delay={0.5} duration={7} />
+        <Butterfly className="bottom-[15%] right-[4%] w-9 h-6 opacity-[0.12]" rotate={20} delay={2} duration={8} />
+        <div className="max-w-2xl mx-auto text-center relative z-10">
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+            <span className="text-[#D4AF37]/70 text-xs tracking-[0.5em]">✦</span>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
+          </div>
+          <p className="text-[#b2693f] text-2xl md:text-3xl font-playfair italic leading-loose mb-4">
+            "Lámpara es a mis pies tu palabra,<br />
+            Y lumbrera a mi camino"
+          </p>
+          <p className="text-[#b2693f]/70 text-sm tracking-[0.4em] uppercase font-light">— Salmos 119:105</p>
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
+            <span className="text-[#D4AF37]/70 text-xs tracking-[0.5em]">✦</span>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#D4AF37]/50" />
+          </div>
+        </div>
+      </section>
+
       {/* Mis Padres Section */}
       <section className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] via-[#F0D5DD] to-[#F5E6D3] border-t border-[#B76E79]/20 py-16 px-6 overflow-hidden">
         <Butterfly className="top-[18%] right-[6%] w-10 h-7 opacity-[0.14]" rotate={32} delay={1} duration={8} />
@@ -808,7 +831,7 @@ export default function SofiaXV() {
           </div>
           <h2 className="text-3xl md:text-5xl mb-4 font-light text-[#b2693f] font-playfair">Una Noche para Recordar</h2>
           <p className="text-base md:text-lg text-[#b2693f]/70 leading-relaxed mb-12 max-w-xl mx-auto">
-            Acompáñanos a una velada inolvidable de elegancia, música y celebración mientras Sofía entra en un nuevo capítulo de su vida.
+            Te invitamos a compartir con nosotros una noche llena de magia, música y grandes recuerdos. Acompáñanos a celebrar los quince años de Sofía y a darle la bienvenida a esta hermosa nueva etapa de su vida.
           </p>
 
           {/* Detail rows */}
