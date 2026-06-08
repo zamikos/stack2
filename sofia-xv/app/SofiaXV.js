@@ -691,9 +691,17 @@ export default function SofiaXV() {
           from { opacity: 0; }
           to   { opacity: 1; }
         }
-        @keyframes scrollBounce {
-          0%, 100% { transform: translateY(0); }
-          50%       { transform: translateY(6px); }
+        @keyframes swipeUp {
+          0%   { transform: rotate(12deg) translateY(18px);  opacity: 0; }
+          15%  { opacity: 1; }
+          85%  { opacity: 1; }
+          100% { transform: rotate(12deg) translateY(-18px); opacity: 0; }
+        }
+        @keyframes swipeTrail {
+          0%   { transform: rotate(12deg) translateY(18px);  opacity: 0;    }
+          15%  { opacity: 0.6; }
+          85%  { opacity: 0.35; }
+          100% { transform: rotate(12deg) translateY(-18px); opacity: 0;   }
         }
       `}</style>
       {/* Floating Navbar */}
@@ -1128,29 +1136,55 @@ export default function SofiaXV() {
       </section>
 
 
-      {/* Scroll Down Indicator — bottom center */}
+      {/* Scroll Indicator — bottom center */}
       <div
-        className={`fixed bottom-7 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none transition-all duration-700 px-5 py-4 rounded-2xl bg-white/50 backdrop-blur-md shadow-[0_6px_24px_rgba(178,105,63,0.2)] ${
+        className={`fixed bottom-7 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-1 pointer-events-none transition-all duration-700 ${
           showScrollIndicator ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
         }`}
+        style={{ position: 'fixed' }}
       >
-        <span className="font-playfair text-sm tracking-[0.3em] uppercase text-[#b2693f] font-semibold whitespace-nowrap">
-          Desliza hacia abajo
-        </span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 52"
-          className="w-3.5 h-[38px] text-[#b2693f]"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          style={{ animation: 'scrollBounce 1.2s ease-in-out infinite' }}
+          viewBox="115 20 230 410"
+          className="w-12 h-[86px] text-[#b2693f]"
+          style={{ animation: 'swipeUp 1.6s cubic-bezier(0.4,0,0.2,1) infinite' }}
         >
-          <line x1="12" y1="3" x2="12" y2="47" />
-          <path d="M 8 43 L 12 47 L 16 43" />
+          <g transform="translate(30, 0)">
+            {/* Concentric ripple circles */}
+            <circle cx="190" cy="125" r="32" fill="none" stroke="currentColor" strokeWidth="5"   opacity="1"/>
+            <circle cx="190" cy="125" r="54" fill="none" stroke="currentColor" strokeWidth="4"   opacity="1"/>
+            <circle cx="190" cy="125" r="76" fill="none" stroke="currentColor" strokeWidth="3"   opacity="0.8"/>
+            <circle cx="190" cy="125" r="98" fill="none" stroke="currentColor" strokeWidth="2.5" opacity="0.58"/>
+            {/* Hand outline */}
+            <path
+              fill="white"
+              stroke="currentColor"
+              strokeWidth="10"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M 178 420 C 155 380, 120 330, 115 285 C 112 255, 138 245, 148 275 C 154 295, 162 315, 172 315 L 172 125 A 18 18 0 0 1 208 125 L 208 205 A 17 17 0 0 1 242 205 L 242 225 A 16 16 0 0 1 274 225 L 274 250 A 15 15 0 0 1 304 250 C 304 310, 292 385, 278 420 Z"
+            />
+            {/* Finger creases */}
+            <path fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" opacity="0.45" d="M 208 205 L 208 265"/>
+            <path fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" opacity="0.45" d="M 242 225 L 242 270"/>
+            <path fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" opacity="0.45" d="M 274 250 L 274 285"/>
+          </g>
         </svg>
+        {/* Swipe trail line — follows below the hand */}
+        <div
+          style={{
+            width: '2px',
+            height: '36px',
+            borderRadius: '999px',
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.8), transparent)',
+            animation: 'swipeTrail 1.6s cubic-bezier(0.4,0,0.2,1) infinite',
+            transformOrigin: 'top center',
+            marginTop: '-8px',
+          }}
+        />
+        <span className="font-playfair text-xs tracking-[0.3em] uppercase text-[#b2693f] font-bold italic">
+          Desliza
+        </span>
       </div>
 
       {/* RSVP Section */}
