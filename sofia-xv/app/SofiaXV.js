@@ -461,9 +461,9 @@ export default function SofiaXV() {
     { id: 1, url: '/images/stacked-polaroids/grass_sf.jpeg', caption: '', rotation: -4 },
     { id: 2, url: '/images/stacked-polaroids/beach_sf.jpeg', caption: '', rotation: 3 },
     { id: 3, url: '/images/stacked-polaroids/forrest.jpeg', caption: '', rotation: -2 },
-    { id: 4, url: '/images/stacked-polaroids/grad.jpeg', caption: '', rotation: 4 },
+    { id: 4, url: '/images/stacked-polaroids/tree.jpeg', caption: '', rotation: 4 },
     { id: 5, url: '/images/stacked-polaroids/cdmx.jpg', caption: '', rotation: -5 },
-    { id: 6, url: '/images/stacked-polaroids/tree.jpeg', caption: '', rotation: 6 }
+    { id: 6, url: '/images/stacked-polaroids/grad.jpeg', caption: '', rotation: 2 },
   ];
 
   const timelinePhotos = [
