@@ -1141,7 +1141,15 @@ export default function SofiaXV() {
         className={`fixed bottom-7 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-1 pointer-events-none transition-all duration-700 ${
           showScrollIndicator ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
         }`}
-        style={{ position: 'fixed' }}
+        style={{
+          position: 'fixed',
+          background: 'rgba(255,255,255,0.55)',
+          border: '1px solid rgba(178,105,63,0.25)',
+          borderRadius: '18px',
+          padding: '20px 16px 16px',
+          backdropFilter: 'blur(14px)',
+          WebkitBackdropFilter: 'blur(14px)',
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -1176,7 +1184,7 @@ export default function SofiaXV() {
             width: '2px',
             height: '36px',
             borderRadius: '999px',
-            background: 'linear-gradient(to bottom, rgba(255,255,255,0.8), transparent)',
+            background: 'linear-gradient(to bottom, rgba(178,105,63,0.8), transparent)',
             animation: 'swipeTrail 1.6s cubic-bezier(0.4,0,0.2,1) infinite',
             transformOrigin: 'top center',
             marginTop: '-8px',
