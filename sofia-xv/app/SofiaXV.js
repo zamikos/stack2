@@ -448,6 +448,8 @@ export default function SofiaXV() {
   const { isPlaying, toggleMusic } = useAudio();
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+  const scrollTimerRef = useRef(null);
 
   const [rsvpData, setRsvpData] = useState({
     name: '',
@@ -578,6 +580,27 @@ export default function SofiaXV() {
     };
   }, []);
 
+  useEffect(() => {
+    const isAtBottom = () => window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+
+    const resetTimer = () => {
+      setShowScrollIndicator(false);
+      clearTimeout(scrollTimerRef.current);
+      if (!isAtBottom()) {
+        scrollTimerRef.current = setTimeout(() => {
+          if (!isAtBottom()) setShowScrollIndicator(true);
+        }, 3000);
+      }
+    };
+
+    window.addEventListener('scroll', resetTimer, { passive: true });
+    resetTimer();
+    return () => {
+      window.removeEventListener('scroll', resetTimer);
+      clearTimeout(scrollTimerRef.current);
+    };
+  }, []);
+
   const handleAddressClick = (e) => {
     e.preventDefault();
     const lat = 22.1550011;
@@ -650,6 +673,10 @@ export default function SofiaXV() {
         @keyframes pageFadeIn {
           from { opacity: 0; }
           to   { opacity: 1; }
+        }
+        @keyframes scrollBounce {
+          0%, 100% { transform: translateY(0); }
+          50%       { transform: translateY(6px); }
         }
       `}</style>
       {/* Floating Navbar */}
@@ -925,7 +952,7 @@ export default function SofiaXV() {
               </div>
               <div className="relative z-10 flex-1">
                 <p className="text-[10px] tracking-[0.45em] uppercase text-[#b2693f]/50 mb-1 font-sans">Código de Vestimenta</p>
-                <p className="font-playfair text-xl md:text-3xl text-[#b2693f]">Formal / Etiqueta</p>
+                <p className="font-playfair text-xl md:text-3xl text-[#b2693f]">Formal</p>
                 <p className="text-xs text-[#b2693f]/55 mt-2 italic">
                   Por favor evita el rosa dorado — es el color del vestido de la quinceañera.
                 </p>
@@ -1082,6 +1109,30 @@ export default function SofiaXV() {
 
         </div>
       </section>
+
+      {/* Scroll Down Indicator — bottom-left */}
+      <div
+        className={`fixed bottom-7 left-7 z-50 flex flex-col items-center gap-2 pointer-events-none transition-all duration-700 px-5 py-4 rounded-2xl bg-[#b2693f] shadow-[0_6px_24px_rgba(178,105,63,0.45)] ${
+          showScrollIndicator ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+        }`}
+      >
+        <span className="font-playfair text-sm tracking-[0.3em] uppercase text-white font-semibold whitespace-nowrap">
+          Desliza hacia abajo
+        </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          className="w-5 h-5 text-white"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ animation: 'scrollBounce 1.2s ease-in-out infinite' }}
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
 
       {/* RSVP Section */}
       <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] min-h-screen flex flex-col justify-center py-24 px-6 overflow-hidden">
