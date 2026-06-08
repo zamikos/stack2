@@ -94,6 +94,14 @@ export default function EnvelopeLanding() {
           from { opacity: 0; transform: translateY(8px); }
           to   { opacity: 1; transform: translateY(0);   }
         }
+        @keyframes sealGlow {
+          0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.7; }
+          100% { transform: translate(-50%, -50%) scale(1.65); opacity: 0;   }
+        }
+        @keyframes tapArrow {
+          0%, 100% { transform: translateY(0);   opacity: 0.6; }
+          50%       { transform: translateY(5px); opacity: 1;   }
+        }
       `}</style>
 
       {/* ── Title ── */}
@@ -119,17 +127,27 @@ export default function EnvelopeLanding() {
         >
           Haz click para abrir mi invitación
         </p>
+        <div style={{ animation: 'tapArrow 1.4s ease-in-out infinite', marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="#b2693f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
       </div>
 
       {/* ── Envelope scene ── */}
-      <div style={{
-        position:          'relative',
-        width:             'min(560px, 92vw)',
-        height:            'min(350px, 61vw)',
-        minHeight:         '215px',
-        perspective:       '1800px',
-        perspectiveOrigin: '50% 15%',
-      }}>
+      <div
+        onClick={phase === 'idle' ? handleSealClick : undefined}
+        style={{
+          position:          'relative',
+          width:             'min(560px, 92vw)',
+          height:            'min(350px, 61vw)',
+          minHeight:         '215px',
+          perspective:       '1800px',
+          perspectiveOrigin: '50% 15%',
+          cursor:            phase === 'idle' ? 'pointer' : 'default',
+        }}
+      >
 
 
         {/* ── Envelope body ── */}
@@ -205,22 +223,34 @@ export default function EnvelopeLanding() {
           }} />
         </div>
 
+        {/* ── Seal glow ring ── */}
+        {phase === 'idle' && (
+          <div style={{
+            position:     'absolute',
+            top:          '47%',
+            left:         '50%',
+            width:        '82px',
+            height:       '82px',
+            borderRadius: '50%',
+            border:       '2px solid rgba(183,110,121,0.65)',
+            transform:    'translate(-50%, -50%)',
+            animation:    'sealGlow 1.8s ease-out infinite',
+            zIndex:       19,
+            pointerEvents:'none',
+          }} />
+        )}
+
         {/* ── Wax seal ── */}
         {(phase === 'idle' || phase === 'cracking') && (
           <div
-            onClick={phase === 'idle' ? handleSealClick : undefined}
             style={{
               position:  'absolute',
               top:       '47%',
               left:      '50%',
               transform: 'translate(-50%, -50%)',
               zIndex:    20,
-              cursor:    phase === 'idle' ? 'pointer' : 'default',
               animation: phase === 'cracking' ? 'sealBreak 0.4s ease forwards' : 'none',
-              transition: phase === 'idle' ? 'transform 0.2s ease' : 'none',
             }}
-            onMouseEnter={e => { if (phase==='idle') e.currentTarget.style.transform = 'translate(-50%,-50%) scale(1.08)'; }}
-            onMouseLeave={e => { if (phase==='idle') e.currentTarget.style.transform = 'translate(-50%,-50%)'; }}
           >
             <WaxSeal />
           </div>
