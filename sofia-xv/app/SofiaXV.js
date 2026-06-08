@@ -1112,7 +1112,7 @@ export default function SofiaXV() {
 
       {/* Scroll Down Indicator — bottom center */}
       <div
-        className={`fixed bottom-7 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none transition-all duration-700 px-5 py-4 rounded-2xl bg-white/35 backdrop-blur-md shadow-[0_6px_24px_rgba(178,105,63,0.2)] ${
+        className={`fixed bottom-7 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none transition-all duration-700 px-5 py-4 rounded-2xl bg-white/50 backdrop-blur-md shadow-[0_6px_24px_rgba(178,105,63,0.2)] ${
           showScrollIndicator ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
         }`}
       >
