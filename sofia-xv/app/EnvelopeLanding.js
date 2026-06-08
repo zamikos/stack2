@@ -68,8 +68,8 @@ export default function EnvelopeLanding() {
     startMusic();
     setPhase('cracking');
     setTimeout(() => setPhase('open'),   400);   // flap starts opening
-    setTimeout(() => setPhase('fading'), 1500);  // brief pause after flap fully open → fade out
-    setTimeout(() => router.push('/celebration'), 2400); // navigate after fade completes
+    setTimeout(() => setPhase('fading'), 900);   // short pause then begin gradual fade
+    setTimeout(() => router.push('/celebration'), 2800); // navigate after fade completes
   };
 
   const isOpen   = phase === 'open' || phase === 'fading';
@@ -146,6 +146,9 @@ export default function EnvelopeLanding() {
           perspective:       '1800px',
           perspectiveOrigin: '50% 15%',
           cursor:            phase === 'idle' ? 'pointer' : 'default',
+          opacity:           isFading ? 0 : 1,
+          transform:         isFading ? 'scale(1.07)' : 'scale(1)',
+          transition:        'opacity 2.6s cubic-bezier(0.4,0,0.2,1), transform 2.6s cubic-bezier(0.4,0,0.2,1)',
         }}
       >
 
@@ -258,14 +261,14 @@ export default function EnvelopeLanding() {
 
       </div>
 
-      {/* Full-page fade-out overlay — matches SofiaXV's opening background */}
+      {/* Full-page fade-out overlay */}
       <div style={{
         position:      'fixed',
         inset:         0,
-        background:    '#F5E6D3',
+        background:    'linear-gradient(160deg, #FEF8F2 0%, #FAEbE3 45%, #F4D8CF 100%)',
         zIndex:        100,
         opacity:       isFading ? 1 : 0,
-        transition:    isFading ? 'opacity 0.9s ease' : 'none',
+        transition:    isFading ? 'opacity 1.7s cubic-bezier(0.4,0,0.2,1)' : 'none',
         pointerEvents: 'none',
       }} />
     </main>
