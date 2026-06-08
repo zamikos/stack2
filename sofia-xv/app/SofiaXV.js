@@ -581,6 +581,7 @@ export default function SofiaXV() {
     };
   }, []);
 
+
   useEffect(() => {
     const isAtBottom = () => window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
 
@@ -1125,6 +1126,7 @@ export default function SofiaXV() {
 
         </div>
       </section>
+
 
       {/* Scroll Down Indicator — bottom center */}
       <div
