@@ -885,7 +885,7 @@ export default function SofiaXV() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full border border-[#B76E79]/5 pointer-events-none" />
 
         <div className="max-w-3xl mx-auto text-center w-full relative z-10">
-          <div className="relative w-full h-48 md:h-[35vh] max-h-80 rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
+          <div className="relative w-full h-64 md:h-[50vh] max-h-[500px] rounded-2xl md:rounded-3xl overflow-hidden border border-[#B76E79]/30 mb-10 shadow-[0_15px_40px_rgba(183,110,121,0.2)] group">
             <img
               src="/images/salon/salon.jpg"
               alt="Salón de Eventos Elegance"
