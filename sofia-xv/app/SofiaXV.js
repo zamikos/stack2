@@ -456,6 +456,7 @@ export default function SofiaXV() {
     attending: '',
     additionalNames: ''
   });
+  const [formError, setFormError] = useState('');
 
   const photos = [
     { id: 1, url: '/images/stacked-polaroids/grass_sf.jpeg', caption: '', rotation: -4 },
@@ -628,6 +629,21 @@ export default function SofiaXV() {
     e.preventDefault();
 
     const { name, attending, additionalNames } = rsvpData;
+
+    if (!name.trim()) {
+      setFormError('Por favor ingresa tu nombre completo.');
+      return;
+    }
+    if (!attending) {
+      setFormError('Por favor indica si podrás asistir.');
+      return;
+    }
+    if (!additionalNames.trim()) {
+      setFormError('Por favor indica los nombres de tus acompañantes, o escribe "Ninguno".');
+      return;
+    }
+
+    setFormError('');
     const phoneNumber = "17073963858";
 
     const message = attending === 'yes'
@@ -1141,14 +1157,14 @@ export default function SofiaXV() {
         <Butterfly className="bottom-[18%] right-[5%] w-9 h-6 opacity-[0.34]" rotate={-12} delay={3.5} duration={7.5} />
         <div className="max-w-xl mx-auto text-center w-full">
           <h2 className="text-4xl md:text-5xl mb-8 font-light text-[#b2693f]">Confirmar Asistencia</h2>
-          <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 1 de julio.</p>
+          <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 1 de Julio.</p>
           
           <form onSubmit={handleWhatsAppSubmit} className="flex flex-col gap-6 text-left">
             <input
               type="text"
               required
               value={rsvpData.name}
-              onChange={(e) => setRsvpData({ ...rsvpData, name: e.target.value })}
+              onChange={(e) => { setRsvpData({ ...rsvpData, name: e.target.value }); setFormError(''); }}
               placeholder="Nombre Completo"
               className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors"
             />
@@ -1159,7 +1175,7 @@ export default function SofiaXV() {
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
-                  onClick={() => setRsvpData({ ...rsvpData, attending: 'yes' })}
+                  onClick={() => { setRsvpData({ ...rsvpData, attending: 'yes' }); setFormError(''); }}
                   className={`py-4 px-4 rounded-xl border font-playfair text-base transition-all duration-300 ${
                     rsvpData.attending === 'yes'
                       ? 'bg-[#B76E79] border-[#B76E79] text-white shadow-[0_4px_14px_rgba(183,110,121,0.4)]'
@@ -1170,7 +1186,7 @@ export default function SofiaXV() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setRsvpData({ ...rsvpData, attending: 'no' })}
+                  onClick={() => { setRsvpData({ ...rsvpData, attending: 'no' }); setFormError(''); }}
                   className={`py-4 px-4 rounded-xl border font-playfair text-base transition-all duration-300 ${
                     rsvpData.attending === 'no'
                       ? 'bg-[#b2693f] border-[#b2693f] text-white shadow-[0_4px_14px_rgba(178,105,63,0.35)]'
@@ -1189,11 +1205,17 @@ export default function SofiaXV() {
                 rows="3"
                 required={rsvpData.attending === 'yes'}
                 value={rsvpData.additionalNames}
-                onChange={(e) => setRsvpData({ ...rsvpData, additionalNames: e.target.value })}
+                onChange={(e) => { setRsvpData({ ...rsvpData, additionalNames: e.target.value }); setFormError(''); }}
                 placeholder="Escribe los nombres de tus acompañantes (o 'Ninguno' si asistes solo)..."
                 className="w-full bg-[#FDFBF7] border border-[#B76E79]/40 shadow-sm rounded-xl px-6 py-4 text-[#b2693f] placeholder-[#b2693f]/50 focus:outline-none focus:border-[#D4AF37] transition-colors resize-none"
               ></textarea>
             </div>
+
+            {formError && (
+              <p className="text-sm text-[#B76E79] text-center bg-[#B76E79]/10 border border-[#B76E79]/30 rounded-xl px-4 py-3">
+                {formError}
+              </p>
+            )}
 
             <button
               type="submit"
