@@ -762,8 +762,8 @@ export default function SofiaXV() {
 
       {/* Presentacion Message Section */}
       <section className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] py-24 px-6 overflow-hidden">
-        <Butterfly className="top-[7%] left-[4%] w-12 h-8 opacity-[0.18]" rotate={-15} delay={0} duration={7} />
-        <Butterfly className="bottom-[10%] right-[5%] w-9 h-6 opacity-[0.15]" rotate={28} delay={2.5} duration={6} />
+        <Butterfly className="top-[7%] left-[4%] w-12 h-8 opacity-[0.38]" rotate={-15} delay={0} duration={7} />
+        <Butterfly className="bottom-[10%] right-[5%] w-9 h-6 opacity-[0.35]" rotate={28} delay={2.5} duration={6} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-[#B76E79]/8 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full border border-[#B76E79]/10 pointer-events-none" />
 
@@ -801,8 +801,8 @@ export default function SofiaXV() {
 
       {/* Bible Verse Section */}
       <section className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] py-24 px-6 overflow-hidden">
-        <Butterfly className="top-[15%] left-[4%] w-10 h-7 opacity-[0.13]" rotate={-15} delay={0.5} duration={7} />
-        <Butterfly className="bottom-[15%] right-[4%] w-9 h-6 opacity-[0.12]" rotate={20} delay={2} duration={8} />
+        <Butterfly className="top-[15%] left-[4%] w-10 h-7 opacity-[0.33]" rotate={-15} delay={0.5} duration={7} />
+        <Butterfly className="bottom-[15%] right-[4%] w-9 h-6 opacity-[0.32]" rotate={20} delay={2} duration={8} />
         <div className="max-w-2xl mx-auto text-center relative z-10">
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#D4AF37]/50" />
@@ -824,7 +824,7 @@ export default function SofiaXV() {
 
       {/* Mis Padres Section */}
       <section className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] py-16 px-6 overflow-hidden">
-        <Butterfly className="top-[18%] right-[6%] w-10 h-7 opacity-[0.14]" rotate={32} delay={1} duration={8} />
+        <Butterfly className="top-[18%] right-[6%] w-10 h-7 opacity-[0.34]" rotate={32} delay={1} duration={8} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#B76E79]/8 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full border border-[#B76E79]/10 pointer-events-none" />
 
@@ -878,9 +878,9 @@ export default function SofiaXV() {
 
       {/* Details Section */}
       <section id="details" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] py-20 px-6 overflow-hidden">
-        <Butterfly className="top-[10%] right-[3%] w-12 h-8 opacity-[0.15]" rotate={-22} delay={3} duration={7} />
-        <Butterfly className="bottom-[3%] left-[48%] w-9 h-6 opacity-[0.14]" rotate={12} delay={1.5} duration={6.5} />
-        <Butterfly className="top-[45%] right-[5%] w-10 h-7 opacity-[0.13]" rotate={-8} delay={0.8} duration={8} />
+        <Butterfly className="top-[10%] right-[3%] w-12 h-8 opacity-[0.35]" rotate={-22} delay={3} duration={7} />
+        <Butterfly className="bottom-[3%] left-[48%] w-9 h-6 opacity-[0.34]" rotate={12} delay={1.5} duration={6.5} />
+        <Butterfly className="top-[45%] right-[5%] w-10 h-7 opacity-[0.33]" rotate={-8} delay={0.8} duration={8} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full border border-[#B76E79]/5 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full border border-[#B76E79]/5 pointer-events-none" />
 
@@ -977,10 +977,10 @@ export default function SofiaXV() {
         style={{ height: `${photos.length * 120}vh` }}
       >
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
-          <Butterfly className="top-[12%] left-[4%] w-11 h-7 opacity-[0.15]" rotate={-18} delay={1.5} duration={7} />
-          <Butterfly className="bottom-[15%] right-[5%] w-10 h-7 opacity-[0.14]" rotate={20} delay={3.5} duration={8} />
-          <Butterfly className="top-[20%] right-[7%] w-8 h-5 opacity-[0.13]" rotate={35} delay={0.5} duration={6.5} />
-          <Butterfly className="bottom-[7%] left-[6%] w-9 h-6 opacity-[0.19]" rotate={-10} delay={2.5} duration={7.5} />
+          <Butterfly className="top-[12%] left-[4%] w-11 h-7 opacity-[0.35]" rotate={-18} delay={1.5} duration={7} />
+          <Butterfly className="bottom-[15%] right-[5%] w-10 h-7 opacity-[0.34]" rotate={20} delay={3.5} duration={8} />
+          <Butterfly className="top-[20%] right-[7%] w-8 h-5 opacity-[0.33]" rotate={35} delay={0.5} duration={6.5} />
+          <Butterfly className="bottom-[7%] left-[6%] w-9 h-6 opacity-[0.39]" rotate={-10} delay={2.5} duration={7.5} />
 
           <h2 className="absolute top-20 md:top-32 text-4xl md:text-5xl font-light text-[#b2693f] z-0">Galería</h2>
 
@@ -1021,7 +1021,7 @@ export default function SofiaXV() {
             text="Mis quince años marcan el comienzo de una nueva aventura, donde inicio un camino lleno de sueños y oportunidades. Dejo mi infancia en el pasado y continúo mi viaje para crear recuerdos increíbles junto a mis amigos y familia. He soñado con esta fiesta desde que era niña y me encantaría que me acompañes a celebrar esta noche tan especial y verdaderamente inolvidable."
             scrollHeight="250vh"
             colorStart="rgba(178, 105, 63, 0.15)"
-            overlay={<Butterfly className="bottom-[4%] right-[5%] w-11 h-7 opacity-[0.15]" rotate={18} delay={1.5} duration={7} />}
+            overlay={<Butterfly className="bottom-[4%] right-[5%] w-11 h-7 opacity-[0.35]" rotate={18} delay={1.5} duration={7} />}
             colorEnd="#b2693f"
             className="font-playfair text-xl md:text-3xl lg:text-4xl leading-relaxed md:leading-[1.6] tracking-tight"
           >
@@ -1037,8 +1037,8 @@ export default function SofiaXV() {
 
       {/* Timeline Section */}
       <section id="timeline" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] pt-16 pb-10 overflow-hidden">
-        <Butterfly className="top-[18%] right-[3%] w-10 h-7 opacity-[0.13]" rotate={-28} delay={4} duration={7.5} />
-        <Butterfly className="bottom-[12%] left-[4%] w-9 h-6 opacity-[0.14]" rotate={14} delay={2} duration={6.5} />
+        <Butterfly className="top-[18%] right-[3%] w-10 h-7 opacity-[0.33]" rotate={-28} delay={4} duration={7.5} />
+        <Butterfly className="bottom-[12%] left-[4%] w-9 h-6 opacity-[0.34]" rotate={14} delay={2} duration={6.5} />
         <div className="max-w-6xl mx-auto text-center px-6 mb-16">
           <h2 className="text-4xl md:text-5xl font-light text-[#b2693f] mb-6">A Través de los Años</h2>
           <p className="text-lg md:text-xl text-[#b2693f]/80 max-w-2xl mx-auto leading-relaxed">
@@ -1051,8 +1051,8 @@ export default function SofiaXV() {
 
       {/* Mesa de Regalos Section */}
       <section id="regalos" className="relative z-10 w-full bg-gradient-to-b from-[#F0D5DD] to-[#F5E6D3] py-20 px-6 overflow-hidden">
-        <Butterfly className="top-[8%] left-[4%] w-11 h-7 opacity-[0.14]" rotate={-20} delay={1} duration={7} />
-        <Butterfly className="bottom-[10%] right-[4%] w-9 h-6 opacity-[0.13]" rotate={25} delay={3} duration={8} />
+        <Butterfly className="top-[8%] left-[4%] w-11 h-7 opacity-[0.34]" rotate={-20} delay={1} duration={7} />
+        <Butterfly className="bottom-[10%] right-[4%] w-9 h-6 opacity-[0.33]" rotate={25} delay={3} duration={8} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#B76E79]/6 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full border border-[#B76E79]/8 pointer-events-none" />
 
@@ -1110,34 +1110,35 @@ export default function SofiaXV() {
         </div>
       </section>
 
-      {/* Scroll Down Indicator — bottom-left */}
+      {/* Scroll Down Indicator — bottom center */}
       <div
-        className={`fixed bottom-7 left-7 z-50 flex flex-col items-center gap-2 pointer-events-none transition-all duration-700 px-5 py-4 rounded-2xl bg-[#b2693f] shadow-[0_6px_24px_rgba(178,105,63,0.45)] ${
+        className={`fixed bottom-7 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none transition-all duration-700 px-5 py-4 rounded-2xl bg-white/35 backdrop-blur-md shadow-[0_6px_24px_rgba(178,105,63,0.2)] ${
           showScrollIndicator ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
         }`}
       >
-        <span className="font-playfair text-sm tracking-[0.3em] uppercase text-white font-semibold whitespace-nowrap">
+        <span className="font-playfair text-sm tracking-[0.3em] uppercase text-[#b2693f] font-semibold whitespace-nowrap">
           Desliza hacia abajo
         </span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          className="w-5 h-5 text-white"
+          viewBox="0 0 24 52"
+          className="w-3.5 h-[38px] text-[#b2693f]"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.5"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
           style={{ animation: 'scrollBounce 1.2s ease-in-out infinite' }}
         >
-          <polyline points="6 9 12 15 18 9" />
+          <line x1="12" y1="3" x2="12" y2="47" />
+          <path d="M 8 43 L 12 47 L 16 43" />
         </svg>
       </div>
 
       {/* RSVP Section */}
       <section id="rsvp" className="relative z-10 w-full bg-gradient-to-b from-[#F5E6D3] to-[#F0D5DD] min-h-screen flex flex-col justify-center py-24 px-6 overflow-hidden">
-        <Butterfly className="top-[10%] left-[5%] w-12 h-8 opacity-[0.16]" rotate={15} delay={1} duration={6.5} />
-        <Butterfly className="bottom-[18%] right-[5%] w-9 h-6 opacity-[0.14]" rotate={-12} delay={3.5} duration={7.5} />
+        <Butterfly className="top-[10%] left-[5%] w-12 h-8 opacity-[0.36]" rotate={15} delay={1} duration={6.5} />
+        <Butterfly className="bottom-[18%] right-[5%] w-9 h-6 opacity-[0.34]" rotate={-12} delay={3.5} duration={7.5} />
         <div className="max-w-xl mx-auto text-center w-full">
           <h2 className="text-4xl md:text-5xl mb-8 font-light text-[#b2693f]">Confirmar Asistencia</h2>
           <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 1 de julio.</p>
