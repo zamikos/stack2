@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>XV Años — Sofía Becerra Martínez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+
+<style>
+  :root{
+    --rose:       #B76E79;
+    --rose-deep:  #8f4e59;
+    --rose-light: #C4889A;
+    --blush:      #F0D5DD;
+    --gold:       #D4AF37;
+    --gold-deep:  #9c7c1e;
+    --gold-pale:  #f7e7ab;
+    --ivory:      #FDFBF7;
+    --copper:     #b2693f;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ height:100%; overflow:hidden; }
+
+  body{
+    background: #F7BEB2;
+    font-family: 'Playfair Display', serif;
+    color: var(--ivory);
+  }
+
+  .stage{
+    position:fixed; inset:0;
+    overflow:hidden;
+  }
+
+  /* ---------- Background: luminous rose gold ---------- */
+  .bg{
+    position:absolute; inset:0;
+    background: linear-gradient(to bottom, #FAD3A2 0%, #F7BEB2 100%);
+  }
+  /* hints of gold blooming from the corners */
+  .bg::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 55% 45% at 8% 100%,  rgba(212,175,55,.16), transparent 70%),
+      radial-gradient(ellipse 55% 45% at 92% 0%,   rgba(212,175,55,.13), transparent 70%),
+      radial-gradient(ellipse 40% 35% at 90% 100%, rgba(247,231,171,.12), transparent 70%);
+  }
+  /* whisper of rose at the edges so the name glows at center */
+  .bg::after{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(ellipse 95% 85% at 50% 48%,
+      transparent 60%, rgba(199,104,120,.2) 100%);
+  }
+
+  /* ---------- Gold corner flourishes ---------- */
+  .corner{
+    position:absolute; width:min(9vw,110px); height:min(9vw,110px);
+    border:1px solid rgba(212,175,55,.55);
+    pointer-events:none;
+    z-index: 5;
+  }
+  .corner i{
+    position:absolute; font-style:normal; color:var(--gold);
+    font-size:min(2vw,20px); opacity:.85; text-shadow:0 0 12px rgba(212,175,55,.6);
+  }
+  .corner.tl{ top:3vh;    left:2.2vw;  border-right:none; border-bottom:none; border-top-left-radius:14px; }
+  .corner.tr{ top:3vh;    right:2.2vw; border-left:none;  border-bottom:none; border-top-right-radius:14px; }
+  .corner.bl{ bottom:3vh; left:2.2vw;  border-right:none; border-top:none;    border-bottom-left-radius:14px; }
+  .corner.br{ bottom:3vh; right:2.2vw; border-left:none;  border-top:none;    border-bottom-right-radius:14px; }
+  .corner.tl i{ top:-11px;   left:-11px; }
+  .corner.tr i{ top:-11px;   right:-11px; }
+  .corner.bl i{ bottom:-11px; left:-11px; }
+  .corner.br i{ bottom:-11px; right:-11px; }
+
+  /* ---------- Center composition ---------- */
+  .center{
+    position:absolute; inset:0; z-index:5;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center;
+    gap: 1.5vh;
+    padding: 0 3vw;
+    pointer-events: none; /* Let clicks pass to 3D canvas when hovering over empty space */
+  }
+
+  .eyebrow{
+    display:flex; align-items:center; gap:2.2vw;
+    animation: fadeDown 2.2s .3s ease-out both;
+  }
+  .eyebrow .rule{
+    width:min(16vw,220px); height:1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .eyebrow .rule.rev{ background: linear-gradient(90deg, var(--gold), transparent); }
+  .eyebrow .star{
+    color:var(--gold); font-size:min(2.2vw,22px);
+    text-shadow:0 0 14px rgba(212,175,55,.8);
+    animation: twinkleStar 4s ease-in-out infinite;
+  }
+  .eyebrow h2{
+    font-weight:500;
+    font-size:min(4.2vw, 7vh);
+    letter-spacing:.45em; text-indent:.45em;
+    color:var(--copper);
+    text-shadow:0 2px 18px rgba(253,251,247,.6);
+    white-space:nowrap;
+  }
+
+  /* The name — metallic gold calligraphy with a living shimmer */
+  .script{
+    font-family:'Pinyon Script', cursive;
+    font-weight:400;
+    line-height:1;
+    white-space:nowrap;
+    position:relative;
+    padding:.45em .4em;
+    margin:-.45em -.4em;
+    background: linear-gradient(to bottom,
+      #E4AEB8 0%, #C9848F 38%, #8f4e59 78%, #B76E79 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    pointer-events: auto; /* Re-enable for interaction if needed */
+  }
+  /* the shimmer: a transparent light band on its own layer */
+  .script::after{
+    content:attr(data-text);
+    position:absolute; inset:0;
+    padding:inherit;
+    background: linear-gradient(100deg,
+      transparent 35%,
+      rgba(232,183,192,.45) 42%,
+      rgba(251,239,226,.95) 50%,
+      rgba(232,183,192,.45) 58%,
+      transparent 65%);
+    background-size:340% 100%;
+    background-position:0% 0;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation: sheenPass 30s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes sheenPass{
+    0%   { background-position:0% 0; }
+    11%  { background-position:100% 0; }
+    50%  { background-position:100% 0; }
+    61%  { background-position:0% 0; }
+    100% { background-position:0% 0; }
+  }
+  .name-first{
+    font-size:min(27vw, 42vh);
+    filter: drop-shadow(0 .015em .03em rgba(143,78,89,.35));
+    animation: fadeUp 2.4s .6s ease-out both;
+  }
+  .name-last{
+    font-size:min(10.5vw, 17vh);
+    filter: drop-shadow(0 .03em .06em rgba(143,78,89,.35));
+    animation: fadeUp 2.4s 1s ease-out both;
+  }
+  .name-last::after{ animation-delay:3s; }
+
+  @keyframes fadeDown{ from{ opacity:0; transform:translateY(-18px);} to{ opacity:1; transform:none;} }
+  @keyframes fadeUp  { from{ opacity:0; transform:translateY(24px);}  to{ opacity:1; transform:none;} }
+
+  /* ---------- Sparkles ---------- */
+  .sparkles{ position:absolute; inset:0; z-index:3; pointer-events:none; }
+  .sp{
+    position:absolute; color:var(--gold);
+    text-shadow:0 0 10px rgba(212,175,55,.9);
+    animation: twinkleStar var(--d,4s) var(--dl,0s) ease-in-out infinite;
+    opacity:0;
+  }
+  .sp.dot{
+    width:4px; height:4px; border-radius:50%;
+    background:radial-gradient(circle, #fff8e1 0%, var(--gold) 60%, transparent 100%);
+    box-shadow:0 0 8px 2px rgba(212,175,55,.55);
+  }
+  @keyframes twinkleStar{
+    0%,100% { opacity:0;   transform:scale(.4) rotate(0deg); }
+    50%     { opacity:.95; transform:scale(1)  rotate(25deg); }
+  }
+
+  /* ---------- 3D WebGL Canvas ---------- */
+  #butterfly-webgl {
+    position: fixed;
+    inset: 0;
+    pointer-events: auto; /* Changed to auto so raycasting can detect mouse hover */
+    z-index: 6; /* As requested, rendering beautifully integrated above background */
+    touch-action: none; /* Prevent scroll interference on mobile when touching butterflies */
+  }
+  
+  /* Container for 3D UI protection so we click through empty space */
+  .canvas-wrapper {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+  }
+  .canvas-wrapper canvas {
+      pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; }
+    .sp{ opacity:.6; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="bg"></div>
+
+  <div class="sparkles" id="sparkles"></div>
+
+  <div class="corner tl"><i>✦</i></div>
+  <div class="corner tr"><i>✦</i></div>
+  <div class="corner bl"><i>✦</i></div>
+  <div class="corner br"><i>✦</i></div>
+
+  <main class="center">
+    <div class="eyebrow">
+      <span class="rule"></span>
+      <span class="star">✦</span>
+      <h2>XV AÑOS</h2>
+      <span class="star" style="animation-delay:2s">✦</span>
+      <span class="rule rev"></span>
+    </div>
+    <h1 class="script name-first" data-text="Sofía">Sofía</h1>
+    <div class="script name-last" data-text="Becerra Martínez">Becerra Martínez</div>
+  </main>
+
+  <div class="canvas-wrapper">
+    <canvas id="butterfly-webgl"></canvas>
+  </div>
+</div>
+
+<script>
+  // ---------- Generate Legacy Sparkles ----------
+  const sk = document.getElementById('sparkles');
+  for(let i=0;i<34;i++){
+    const s = document.createElement('span');
+    const isStar = Math.random() < .4;
+    s.className = 'sp' + (isStar ? '' : ' dot');
+    if(isStar){ s.textContent = '✦'; s.style.fontSize = (8 + Math.random()*10) + 'px'; }
+    s.style.left = (Math.random()*100) + 'vw';
+    s.style.top  = (Math.random()*100) + 'vh';
+    s.style.setProperty('--d',  (3 + Math.random()*4).toFixed(1) + 's');
+    s.style.setProperty('--dl', (-Math.random()*7).toFixed(1) + 's');
+    sk.appendChild(s);
+  }
+
+  // ---------- Three.js & Simplex Noise Setup ----------
+  const canvas = document.getElementById('butterfly-webgl');
+  const renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    alpha: true,
+    antialias: true
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+
+  const scene = new THREE.Scene();
+
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+  camera.position.set(0, 0, 100);
+
+  const simplex = new SimplexNoise();
+
+  // ---------- Scene Lighting & Environment ----------
+  const ambientLight = new THREE.AmbientLight(0xFFFDF8, 0.8);
+  scene.add(ambientLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xfff5e6, 1.2);
+  // Match HTML light source from top-right
+  directionalLight.position.set(40, 60, 50);
+  scene.add(directionalLight);
+
+  // Soft Environment Map (IBL)
+  const pmremGenerator = new THREE.PMREMGenerator(renderer);
+  pmremGenerator.compileEquirectangularShader();
+  
+  // Create a canvas texture for a warm radial gradient HDR feel
+  const envCanvas = document.createElement('canvas');
+  envCanvas.width = 512; envCanvas.height = 512;
+  const envCtx = envCanvas.getContext('2d');
+  const envGrad = envCtx.createRadialGradient(256, 256, 0, 256, 256, 256);
+  envGrad.addColorStop(0, '#FFFFFF'); // Bright light source
+  envGrad.addColorStop(0.5, '#F7BEB2'); // Warm rose gold
+  envGrad.addColorStop(1, '#8f4e59'); // Deep shadow
+  envCtx.fillStyle = envGrad;
+  envCtx.fillRect(0, 0, 512, 512);
+  const envTexture = new THREE.CanvasTexture(envCanvas);
+  envTexture.mapping = THREE.EquirectangularReflectionMapping;
+  scene.environment = envTexture;
+
+  // ---------- Procedural Butterfly Textures & Materials ----------
+  
+  // Helper to generate custom wing maps dynamically matching watercolor/gold-leaf style
+  function generateWingMaps(baseColor, edgeColor, goldColor) {
+      const size = 1024;
+      const cDiffuse = document.createElement('canvas');
+      const cAlpha = document.createElement('canvas');
+      const cNormal = document.createElement('canvas');
+      const cMetalness = document.createElement('canvas'); // New metalness map for gold foil
+      [cDiffuse, cAlpha, cNormal, cMetalness].forEach(c => { c.width = size; c.height = size; });
+      
+      const ctxD = cDiffuse.getContext('2d');
+      const ctxA = cAlpha.getContext('2d');
+      const ctxN = cNormal.getContext('2d');
+      const ctxM = cMetalness.getContext('2d');
+
+      // --- 1. Wing Shape (Alpha Map) ---
+      ctxA.fillStyle = '#000000';
+      ctxA.fillRect(0, 0, size, size);
+      
+      const drawForewing = (ctx) => {
+          ctx.beginPath();
+          ctx.moveTo(size * 0.05, size * 0.45); // Body attach point
+          // Sweeping top edge
+          ctx.bezierCurveTo(size * 0.1, size * 0.1, size * 0.8, size * 0.05, size * 0.95, size * 0.2);
+          // Scalloped outer edge
+          ctx.bezierCurveTo(size * 0.9, size * 0.3, size * 0.85, size * 0.4, size * 0.65, size * 0.48);
+          // Inner edge returning to body
+          ctx.bezierCurveTo(size * 0.3, size * 0.5, size * 0.1, size * 0.48, size * 0.05, size * 0.45);
+          ctx.fill();
+      };
+
+      const drawHindwing = (ctx) => {
+          ctx.beginPath();
+          ctx.moveTo(size * 0.05, size * 0.5); // Body attach point
+          // Upper edge (slightly overlapping forewing)
+          ctx.bezierCurveTo(size * 0.2, size * 0.5, size * 0.5, size * 0.52, size * 0.65, size * 0.6);
+          // Outer scalloped edge
+          ctx.bezierCurveTo(size * 0.75, size * 0.75, size * 0.6, size * 0.95, size * 0.4, size * 0.95);
+          // Inner edge returning to body
+          ctx.bezierCurveTo(size * 0.2, size * 0.9, size * 0.1, size * 0.7, size * 0.05, size * 0.5);
+          ctx.fill();
+      };
+
+      ctxA.fillStyle = '#FFFFFF';
+      drawForewing(ctxA);
+      drawHindwing(ctxA);
+
+      // --- 2. Watercolor Diffuse (Color Map) ---
+      // Base watercolor gradient
+      const grad = ctxD.createRadialGradient(size*0.1, size*0.5, size*0.1, size*0.4, size*0.5, size*0.9);
+      grad.addColorStop(0, baseColor); // Darker near body
+      grad.addColorStop(0.7, edgeColor); // Lighter edges
+      grad.addColorStop(1, 'rgba(255,255,255,0.8)'); // Very soft outer fade
+      
+      ctxD.fillStyle = grad;
+      ctxD.fillRect(0,0,size,size);
+
+      // Add soft watercolor mottling (using a simple noise approach)
+      ctxD.globalCompositeOperation = 'multiply';
+      for(let i=0; i<1000; i++) {
+          ctxD.fillStyle = `rgba(180, 120, 140, ${Math.random() * 0.05})`;
+          ctxD.beginPath();
+          ctxD.arc(Math.random()*size, Math.random()*size, Math.random()*size*0.1, 0, Math.PI*2);
+          ctxD.fill();
+      }
+      ctxD.globalCompositeOperation = 'source-over';
+
+      // --- 3. Delicate Veins & Gold Foil ---
+      ctxD.save();
+      // Clip drawing to wing shapes so we don't draw outside
+      ctxD.beginPath();
+      drawForewing(ctxD);
+      drawHindwing(ctxD);
+      ctxD.clip();
+
+      // Soft Veins (darker pink, very subtle)
+      ctxD.strokeStyle = 'rgba(150, 80, 100, 0.4)';
+      ctxD.lineWidth = size * 0.003;
+      ctxD.lineCap = 'round';
+      const drawVeins = (originY, scale, count) => {
+          for(let i = 0; i < count; i++) {
+              let endX = size * (0.2 + Math.random() * 0.7 * scale);
+              let endY = size * (originY + (Math.random() - 0.5) * 0.8 * scale);
+              ctxD.beginPath();
+              ctxD.moveTo(size * 0.05, size * originY);
+              ctxD.quadraticCurveTo(size * 0.3, size * originY + (endY - size*originY)*0.3, endX, endY);
+              ctxD.stroke();
+          }
+      };
+      drawVeins(0.45, 1.0, 12); // Forewing
+      drawVeins(0.5, 0.8, 8);  // Hindwing
+
+      // --- 4. Gold Leaf Accents ---
+      // We draw gold on the Diffuse map, and also on the Metalness map
+      ctxM.fillStyle = '#000000'; // Default non-metal
+      ctxM.fillRect(0,0,size,size);
+
+      const drawGoldSplatters = (x, y, radius, density) => {
+          for(let i=0; i<density; i++) {
+              let px = x + (Math.random()-0.5)*radius;
+              let py = y + (Math.random()-0.5)*radius;
+              let s = Math.random() * size * 0.015; // Size of splatter
+              
+              // Draw on color map
+              ctxD.fillStyle = goldColor;
+              ctxD.beginPath(); ctxD.arc(px, py, s, 0, Math.PI*2); ctxD.fill();
+              
+              // Draw on metalness map (white = fully metallic)
+              ctxM.fillStyle = '#FFFFFF';
+              ctxM.beginPath(); ctxM.arc(px, py, s, 0, Math.PI*2); ctxM.fill();
+          }
+      };
+
+      // Concentrate gold foil near the edges and specifically on the hindwing tips
+      // Forewing edges
+      for(let i=0; i<30; i++) drawGoldSplatters(size*(0.5 + Math.random()*0.4), size*(0.1 + Math.random()*0.3), size*0.1, 5);
+      // Hindwing edges/tails
+      for(let i=0; i<40; i++) drawGoldSplatters(size*(0.3 + Math.random()*0.4), size*(0.7 + Math.random()*0.25), size*0.08, 8);
+      // Center body area dust
+      drawGoldSplatters(size*0.15, size*0.48, size*0.1, 40);
+
+      ctxD.restore();
+
+      // Normal Map (Soft paper texture)
+      ctxN.fillStyle = '#8080FF'; 
+      ctxN.fillRect(0,0,size,size);
+      // Simplified noise for normal map to save processing, just a slight bump
+      const imgDataN = ctxN.getImageData(0,0,size,size);
+      for(let i=0; i<imgDataN.data.length; i+=4) {
+          if (Math.random() > 0.5) {
+               imgDataN.data[i] = 120 + Math.random()*16; // slightly perturb X
+          }
+      }
+      ctxN.putImageData(imgDataN, 0, 0);
+
+      const map = new THREE.CanvasTexture(cDiffuse);
+      const alphaMap = new THREE.CanvasTexture(cAlpha);
+      const normalMap = new THREE.CanvasTexture(cNormal);
+      const metalnessMap = new THREE.CanvasTexture(cMetalness);
+      
+      return { map, alphaMap, normalMap, metalnessMap };
+  }
+
+  // Palettes designed to match the provided reference image
+  // Soft watercolor pinks, mauves, and bright gold foil
+  const PALETTES = {
+      blush: { base: '#d18b9b', edge: '#f2d5dc', gold: '#e0b863', body: '#d4af37', iridescence: [0.9, 0.7, 0.8] },
+      rose:  { base: '#b5677b', edge: '#ebb7c4', gold: '#e8c97d', body: '#c4a031', iridescence: [0.8, 0.5, 0.6] },
+      pale:  { base: '#e6b5c1', edge: '#fcf2f4', gold: '#d4af37', body: '#d4af37', iridescence: [0.95, 0.85, 0.9] }
+  };
+
+  const materials = {};
+  
+  for(const key in PALETTES) {
+      const p = PALETTES[key];
+      const maps = generateWingMaps(p.base, p.edge, p.gold);
+      
+      const mat = new THREE.MeshPhysicalMaterial({
+          color: 0xffffff,
+          map: maps.map,
+          alphaMap: maps.alphaMap,
+          normalMap: maps.normalMap,
+          metalnessMap: maps.metalnessMap, // Use the custom metalness map for gold parts
+          transparent: true,
+          opacity: 0.9,         // Slightly more opaque for watercolor feel
+          side: THREE.DoubleSide,
+          transmission: 0.2,    // Less glassy, more like thin paper
+          roughness: 0.7,       // Rougher surface (watercolor paper), metalness map will override for gold
+          metalness: 1.0,       // Set to 1.0 so the metalnessMap fully controls it
+          alphaTest: 0.05
+      });
+
+      // Custom Shader for slight pearlescent sheen (less intense than before)
+      mat.onBeforeCompile = (shader) => {
+          shader.uniforms.iridescenceColor = { value: new THREE.Vector3(...p.iridescence) };
+          shader.fragmentShader = `
+              uniform vec3 iridescenceColor;
+              ${shader.fragmentShader}
+          `.replace(
+              '#include <dithering_fragment>',
+              `
+              #include <dithering_fragment>
+              // Soft view angle fresnel
+              float fresnelTerm = abs(dot(vNormal, normalize(vViewPosition)));
+              fresnelTerm = 1.0 - fresnelTerm;
+              fresnelTerm = pow(fresnelTerm, 3.0);
+              // Add delicate iridescent glow, masked by alpha
+              vec3 iri = mix(iridescenceColor, vec3(1.0), fresnelTerm * 0.3);
+              gl_FragColor.rgb += iri * fresnelTerm * 0.3 * diffuseColor.a;
+              `
+          );
+      };
+      
+      // Delicate gold body
+      const bodyMat = new THREE.MeshStandardMaterial({
+          color: p.body, roughness: 0.3, metalness: 0.8
+      });
+      
+      materials[key] = { wing: mat, body: bodyMat };
+  }
+
+  // Base Wing Geometry (Planar) - Widened for new shape
+  const wingGeo = new THREE.PlaneGeometry(16, 14, 16, 16); 
+  
+  // FIX: Because the wing map texture has a 5% transparent margin on the left (0.05 * 16 = 0.8 units), 
+  // we translate the geometry by 7.2 instead of 8.0. This correctly offsets the 0.8 unit gap,
+  // making the visible part of the wing begin perfectly at X=0 so it touches the body seamlessly.
+  wingGeo.translate(7.2, 0, 0); 
+  
+  // Use a stretched sphere for the body with higher segments for a smoother look
+  const bodyGeo = new THREE.SphereGeometry(0.8, 16, 16);
+  // Adjusted scale to make the body slightly thicker to act as a solid hinge point
+  bodyGeo.scale(0.35, 2.2, 0.35);
+
+  // Create very thin, gracefully curved antennas
+  const antennaCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(0.3, 1.2, 0.2), // Extended midpoint
+      new THREE.Vector3(0.6, 2.4, 0.4)  // Extended endpoint
+  ]);
+  // 8 segments along curve, 0.015 radius (very thin), 4 radial segments
+  const antennaGeo = new THREE.TubeGeometry(antennaCurve, 8, 0.015, 4, false);
+
+  // ---------- Butterfly Physics & Logic ----------
+  class Butterfly {
+      constructor(type) {
+          this.group = new THREE.Group();
+          
+          this.matGroup = materials[type];
+          
+          this.body = new THREE.Mesh(bodyGeo, this.matGroup.body);
+          // Shift the body down slightly so the wings organically attach to the upper "thorax"
+          this.body.position.y = -0.5;
+          this.group.add(this.body);
+          
+          // Left Antenna
+          this.antennaL = new THREE.Mesh(antennaGeo, this.matGroup.body);
+          this.antennaL.position.set(0.05, 0.8, 0.1); // Attach near the "head"
+          this.group.add(this.antennaL);
+          
+          // Right Antenna
+          this.antennaR = new THREE.Mesh(antennaGeo, this.matGroup.body);
+          this.antennaR.position.set(-0.05, 0.8, 0.1); // Attach near the "head"
+          this.antennaR.scale.x = -1; // Mirror horizontally for the right side
+          this.group.add(this.antennaR);
+
+          this.wingL = new THREE.Mesh(wingGeo, this.matGroup.wing);
+          this.wingL.customDepthMaterial = new THREE.MeshDepthMaterial({
+              depthPacking: THREE.RGBADepthPacking,
+              alphaMap: this.matGroup.wing.alphaMap,
+              alphaTest: 0.5
+          });
+          
+          this.wingR = new THREE.Mesh(wingGeo, this.matGroup.wing);
+          this.wingR.customDepthMaterial = this.wingL.customDepthMaterial;
+          this.wingR.scale.x = -1; // Mirror right wing
+          
+          // Slight dihedral angle
+          this.wingL.rotation.x = 0.1;
+          this.wingR.rotation.x = 0.1;
+          
+          this.group.add(this.wingL);
+          this.group.add(this.wingR);
+
+          scene.add(this.group);
+          
+          // State Machine
+          this.state = 'FLYING'; // FLYING, LANDING, RESTING, FLEEING
+          this.position = new THREE.Vector3((Math.random()-0.5)*100, (Math.random()-0.5)*80, (Math.random()-0.5)*30);
+          this.velocity = new THREE.Vector3();
+          this.targetRotation = new THREE.Quaternion(); // Add a quaternion for smooth rotation
+          this.domTarget = null;
+          this.group.position.copy(this.position);
+          
+          // Personality traits
+          this.seed = Math.random() * 1000;
+          this.speed = 0.12 + Math.random() * 0.08; // Slightly slower base speed for grace
+          
+          // Reduced scale by ~15%
+          this.scaleOffset = (0.6 + Math.random() * 0.6) * 0.85;
+          this.group.scale.set(this.scaleOffset, this.scaleOffset, this.scaleOffset);
+          
+          this.flapTime = Math.random() * 10;
+          this.baseFlapSpeed = 0.07 + Math.random() * 0.06; // Much slower, gentler base flap speed
+          
+          this.restStartTime = 0;
+          this.restDuration = 0;
+      }
+      
+      update(time, delta) {
+          let currentSpeed = this.speed;
+          let flapFrequency = this.baseFlapSpeed;
+          let flapAmplitude = 0.85; // Reduced amplitude for more grace
+          let centerAngle = 0.7; // Base angle (wings naturally sit slightly more V-shaped)
+          
+          if (this.state === 'FLYING') {
+              // Graceful wandering using lower frequency noise
+              let timeScale = 0.15; // Slower noise evolution
+              let nx = simplex.noise3D(this.position.x * 0.015, this.position.y * 0.015, time * timeScale + this.seed);
+              let ny = simplex.noise3D(this.position.y * 0.015, this.position.z * 0.015, time * timeScale + this.seed);
+              let nz = simplex.noise3D(this.position.z * 0.015, this.position.x * 0.015, time * timeScale + this.seed);
+              
+              let desiredVelocity = new THREE.Vector3(nx, ny, nz).multiplyScalar(0.4);
+              
+              // Soft boundary enforcement (keep on screen) with smoother steering back
+              let boundaryForce = new THREE.Vector3();
+              const limitX = 60, limitY = 40, limitZ = 20;
+              if (this.position.x > limitX) boundaryForce.x -= (this.position.x - limitX) * 0.02;
+              if (this.position.x < -limitX) boundaryForce.x += (-limitX - this.position.x) * 0.02;
+              if (this.position.y > limitY) boundaryForce.y -= (this.position.y - limitY) * 0.02;
+              if (this.position.y < -limitY) boundaryForce.y += (-limitY - this.position.y) * 0.02;
+              if (this.position.z > limitZ) boundaryForce.z -= (this.position.z - limitZ) * 0.02;
+              if (this.position.z < -limitZ) boundaryForce.z += (-limitZ - this.position.z) * 0.02;
+              
+              desiredVelocity.add(boundaryForce);
+              
+              // Smoothly steer towards the desired velocity
+              this.velocity.lerp(desiredVelocity, 0.03); // Low lerp factor for sluggish, smooth changes
+              this.velocity.clampLength(0, currentSpeed * 1.5);
+              this.position.add(this.velocity);
+              
+              // Smooth Rotation (Slerp) to prevent spinning
+              if (this.velocity.lengthSq() > 0.001) {
+                  let lookTarget = this.position.clone().add(this.velocity);
+                  // Create a dummy matrix to look at the target, then extract quaternion
+                  const dummyMat = new THREE.Matrix4();
+                  dummyMat.lookAt(this.position, lookTarget, this.group.up);
+                  this.targetRotation.setFromRotationMatrix(dummyMat);
+                  
+                  // Slerp towards target rotation for buttery smooth turning
+                  this.group.quaternion.slerp(this.targetRotation, 0.05); 
+              }
+              
+              // Add slight bobbing
+              this.group.position.copy(this.position);
+              this.group.position.y += Math.sin(time * 1.5 + this.seed) * 1.2; // Softer bobbing
+
+          } else if (this.state === 'LANDING' && this.domTarget) {
+              // Steer towards target node
+              let targetPos = get3DPosFromDOM(this.domTarget);
+              let desired = targetPos.clone().sub(this.position);
+              let dist = desired.length();
+              
+              desired.normalize();
+              if (dist < 10) {
+                  desired.multiplyScalar(currentSpeed * (dist/10)); // Slow down
+                  flapFrequency = this.baseFlapSpeed * 0.6;
+              } else {
+                  desired.multiplyScalar(currentSpeed * 1.5);
+              }
+              
+              let steer = desired.sub(this.velocity);
+              steer.clampLength(0, 0.03); // Gentler steering when landing
+              this.velocity.add(steer);
+              this.position.add(this.velocity);
+              
+              // Smooth rotation for landing too
+              if (this.velocity.lengthSq() > 0.001) {
+                  let lookTarget = this.position.clone().add(this.velocity);
+                  const dummyMat = new THREE.Matrix4();
+                  dummyMat.lookAt(this.position, lookTarget, this.group.up);
+                  this.targetRotation.setFromRotationMatrix(dummyMat);
+                  this.group.quaternion.slerp(this.targetRotation, 0.08); // Turn a bit faster when steering to land
+              }
+              
+              this.group.position.copy(this.position);
+              
+              if (dist < 1.0) {
+                  this.state = 'RESTING';
+                  this.velocity.set(0,0,0);
+                  this.restStartTime = time;
+                  this.restDuration = 3 + Math.random() * 6; // Rest for 3 to 9 seconds
+              }
+
+          } else if (this.state === 'RESTING') {
+              // Stay glued to target
+              if (this.domTarget) {
+                  let targetPos = get3DPosFromDOM(this.domTarget);
+                  this.position.lerp(targetPos, 0.1);
+                  this.group.position.copy(this.position);
+                  
+                  // Orient slightly upwards smoothly
+                  const targetRestQuat = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 4, 0, 0));
+                  this.group.quaternion.slerp(targetRestQuat, 0.05);
+              }
+              // Very slow, gentle breathing flaps
+              flapFrequency = 0.015;
+              flapAmplitude = 0.15;
+              centerAngle = 1.2; // Folded mostly up
+              
+              // Automatically take off after a few seconds
+              if (time - this.restStartTime > this.restDuration) {
+                  this.state = 'FLEEING'; // Takeoff animation
+              }
+
+          } else if (this.state === 'FLEEING') {
+              // Rapid erratic takeoff but smoothed
+              this.velocity.y += 0.05; // gentler jump
+              let nx = simplex.noise2D(time, this.seed);
+              this.velocity.x += nx * 0.1;
+              this.velocity.z += 0.08; // move towards camera
+              this.velocity.clampLength(0, currentSpeed * 2.5);
+              this.position.add(this.velocity);
+              
+              // Smooth rotation during flee
+              if (this.velocity.lengthSq() > 0.001) {
+                  let lookTarget = this.position.clone().add(this.velocity);
+                  const dummyMat = new THREE.Matrix4();
+                  dummyMat.lookAt(this.position, lookTarget, this.group.up);
+                  this.targetRotation.setFromRotationMatrix(dummyMat);
+                  this.group.quaternion.slerp(this.targetRotation, 0.1); 
+              }
+
+              this.group.position.copy(this.position);
+              
+              flapFrequency = this.baseFlapSpeed * 2.5;
+              
+              if (this.position.y > 60 || this.position.z > 40) {
+                  this.state = 'FLYING';
+                  this.domTarget = null;
+              }
+          }
+
+          // Apply Wing Flapping (rotation around Y axis relative to group)
+          this.flapTime += flapFrequency;
+          
+          // Smooth sine wave mapping (no absolute value bouncing)
+          let sine = Math.sin(this.flapTime);
+          let angleRange = (Math.PI / 4) * flapAmplitude; 
+          let angle = centerAngle + sine * angleRange;
+          
+          this.wingL.rotation.y = angle;
+          this.wingR.rotation.y = -angle;
+      }
+  }
+
+  // ---------- Swarm Initialization ----------
+  const butterflies = [];
+  // Updated types to match new palettes
+  const types = ['blush', 'rose', 'pale', 'blush', 'pale', 'rose'];
+  
+  for(let i = 0; i < types.length; i++) {
+      butterflies.push(new Butterfly(types[i]));
+  }
+
+  // ---------- Raycasting & DOM Landing Logic ----------
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2(-999, -999);
+  
+  window.addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  window.addEventListener('touchmove', (e) => {
+      if(e.touches.length > 0) {
+          mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
+          mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
+      }
+  }, { passive: true });
+
+  // Map 2D DOM Element to 3D World Space Coordinates
+  function get3DPosFromDOM(el) {
+      const rect = el.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      
+      const vec = new THREE.Vector3(
+          (x / window.innerWidth) * 2 - 1,
+          -(y / window.innerHeight) * 2 + 1,
+          0.5
+      );
+      vec.unproject(camera);
+      const dir = vec.sub(camera.position).normalize();
+      
+      // Calculate intersection with an invisible plane at Z = 2 (slightly in front of background)
+      const targetZ = 2; 
+      const distance = (targetZ - camera.position.z) / dir.z;
+      return camera.position.clone().add(dir.multiplyScalar(distance));
+  }
+
+  // Find valid landing targets (removed .name-first so they don't land on Sofia)
+  const landingNodes = Array.from(document.querySelectorAll('.corner, .name-last'));
+  
+  // Periodically command a butterfly to land
+  setInterval(() => {
+      // Find a flying butterfly
+      let flying = butterflies.filter(b => b.state === 'FLYING');
+      if (flying.length > 0 && Math.random() > 0.3) {
+          let b = flying[Math.floor(Math.random() * flying.length)];
+          let target = landingNodes[Math.floor(Math.random() * landingNodes.length)];
+          b.state = 'LANDING';
+          b.domTarget = target;
+      }
+  }, 4000);
+
+  // ---------- Animation Loop ----------
+  const clock = new THREE.Clock();
+
+  function animate() {
+      requestAnimationFrame(animate);
+      
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      // Check Interactions (Raycast)
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(scene.children, true);
+      
+      let hoveredGroup = null;
+      if (intersects.length > 0) {
+          // Walk up to find the group
+          let obj = intersects[0].object;
+          while(obj.parent && obj.parent.type === 'Group') {
+              obj = obj.parent;
+          }
+          hoveredGroup = obj;
+      }
+
+      for(let b of butterflies) {
+          // If mouse hovers a resting/landing butterfly, scare it away!
+          if (hoveredGroup === b.group && (b.state === 'RESTING' || b.state === 'LANDING')) {
+              b.state = 'FLEEING';
+          }
+          
+          b.update(time, delta);
+      }
+
+      renderer.render(scene, camera);
+  }
+
+  // Handle Resize
+  window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      
+      // Force resting butterflies to recalculate DOM pos
+      butterflies.forEach(b => {
+          if (b.state === 'RESTING') b.state = 'LANDING'; 
+      });
+  });
+
+  // Start Animation
+  animate();
+
+</script>
+</body>
+</html>
