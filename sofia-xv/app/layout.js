@@ -1,5 +1,6 @@
 import './globals.css';
 import AudioProvider from './AudioProvider';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
   title: 'XV Años de Sofía Becerra Martínez',
@@ -21,7 +22,10 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body className="antialiased"><AudioProvider>{children}</AudioProvider></body>
+      <body className="antialiased">
+        <AudioProvider>{children}</AudioProvider>
+        <Analytics />
+      </body>
     </html>
   );
 }
