@@ -8,11 +8,6 @@ const nextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      { source: '/backdrop', destination: '/backdrop.html' },
-    ];
-  },
 };
 
 module.exports = nextConfig;

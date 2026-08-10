@@ -69,7 +69,7 @@ export default function EnvelopeLanding() {
     setPhase('cracking');
     setTimeout(() => setPhase('open'),   400);   // flap starts opening
     setTimeout(() => setPhase('fading'), 900);   // short pause then begin gradual fade
-    setTimeout(() => router.push('/celebration'), 2800); // navigate after fade completes
+    setTimeout(() => router.push('/celebration-us'), 2800); // navigate after fade completes
   };
 
   const isOpen   = phase === 'open' || phase === 'fading';

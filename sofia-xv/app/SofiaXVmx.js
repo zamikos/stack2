@@ -434,7 +434,7 @@ const CountdownSection = ({
 };
 
 
-export default function SofiaXV() {
+export default function SofiaXVmx() {
   const scrollContainerRef = useRef(null);
   const heroTextRef = useRef(null);
   const heroCardRef = useRef(null);
