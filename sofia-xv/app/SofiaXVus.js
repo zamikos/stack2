@@ -1194,7 +1194,7 @@ export default function SofiaXVus() {
         <Butterfly className="bottom-[18%] right-[5%] w-9 h-6 opacity-[0.34]" rotate={-12} delay={3.5} duration={7.5} />
         <div className="max-w-xl mx-auto text-center w-full">
           <h2 className="text-4xl md:text-5xl mb-8 font-light text-[#b2693f]">Confirmar Asistencia</h2>
-          <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 23 de Agosto.</p>
+          <p className="text-[#b2693f]/80 mb-12">Por favor, haznos saber si puedes asistir antes del 30 de Agosto.</p>
           
           <form onSubmit={handleWhatsAppSubmit} className="flex flex-col gap-6 text-left">
             <input
