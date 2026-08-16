@@ -122,7 +122,7 @@ export default function EnvelopeLanding() {
           <div className="h-px w-14 bg-gradient-to-l from-transparent to-[#D4AF37]/55" />
         </div>
         <p
-          className="font-playfair text-sm md:text-base text-[#b2693f]/70 italic"
+          className="font-playfair text-sm md:text-base text-[#b2693f]/70 italic font-bold"
           style={{ animation: 'hintPulse 2.8s ease-in-out infinite' }}
         >
           Haz click para abrir mi invitación
